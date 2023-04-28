@@ -1,0 +1,14 @@
+.headerMenu__link {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: black;
+
+  &:not(:first-child){
+    margin-left: 60px;
+  }
+
+  &.--active{
+    color: #5E96FC;
+  }
+}
