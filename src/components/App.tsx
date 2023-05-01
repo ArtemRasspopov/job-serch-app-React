@@ -1,13 +1,12 @@
 import React from "react";
 import Header from "./Header/Header";
-import { PageContainer } from "./containers/PageContainer";
+import VacancyPage from "../pages/vacancyPage/VacancyPage";
 
 function App() {
   return (
     <div className="app">
-      <PageContainer>
-        <Header />
-      </PageContainer>
+      <Header />
+      <VacancyPage/>
     </div>
   );
 }
