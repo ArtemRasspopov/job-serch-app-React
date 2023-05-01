@@ -1,5 +1,6 @@
 import React from "react";
 import { PageContainer } from "../../components/containers/PageContainer/PageContainer";
+import { VacancyCard } from "../../components/VacancyCard/VacancyCard";
 
 const VacancyPage: React.FC = () => {
   return (
@@ -7,7 +8,9 @@ const VacancyPage: React.FC = () => {
       <PageContainer>
         <div className="vacancyPage__inner">
           <div className="vacancyPage__filters-wrapper"></div>
-          <div className="vacancyPage__content-wrapper"></div>
+          <div className="vacancyPage__content-wrapper">
+            <VacancyCard/>
+          </div>
         </div>
       </PageContainer>
     </div>

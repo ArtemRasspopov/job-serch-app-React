@@ -5,7 +5,7 @@ import { HeaderMenu } from "./HeaderMenu/HeaderMenu";
 import { PageContainer } from "../containers/PageContainer/PageContainer";
 
 
-const Header: React.FC = () => {
+export const Header: React.FC = () => {
   return (
     <div className="header">
       <PageContainer>
@@ -18,4 +18,3 @@ const Header: React.FC = () => {
   );
 };
 
-export default Header;
