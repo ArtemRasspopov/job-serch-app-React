@@ -1,0 +1,52 @@
+.numberInput {
+  padding: 11px 12px;
+  border: 1px solid #d5d6dc;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+
+  &__input {
+    width: 100%;
+
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #232134;
+
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+
+    &::placeholder {
+      color: #acadb9;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    gap: 2px;
+  }
+
+  &__button {
+    display: flex;
+    padding: 4px;
+
+    &:hover svg path {
+      stroke: #5e96fc;
+    }
+
+    &:active svg path {
+      stroke: #acadb9;
+    }
+
+    &:first-child svg {
+      transform: rotate(180deg);
+    }
+  }
+}

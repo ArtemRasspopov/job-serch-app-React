@@ -1,0 +1,64 @@
+.dropdownInput {
+  &__button {
+    position: relative;
+
+    button {
+      padding: 9px 12px;
+      border: 1px solid #d5d6dc;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+
+      font-size: 14px;
+      line-height: 20px;
+      color: #acadb9;
+    }
+
+    &-arrow {
+      display: flex;
+      position: absolute;
+      top: 16px;
+      right: 17px;
+      transition: all 0.3s;
+
+      &.--active {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &__list {
+    height: 0;
+    flex-direction: column;
+
+    overflow-y: scroll;
+    transition: all 0.3s;
+
+    &::-webkit-scrollbar {
+      background-color: transparent;
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #acadb9;
+      border-radius: 20px;
+    }
+
+    &.--active {
+      display: flex;
+      height: 180px;
+      margin-top: 16px;
+    }
+  }
+
+  &__list-item {
+    padding: 8px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #232134;
+    cursor: pointer;
+  }
+}

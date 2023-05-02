@@ -1,4 +1,36 @@
-.searchFilters{
-    background-color: #FFFFFF;
-    padding: 20px;
+.searchFilters {
+  background-color: #ffffff;
+  padding: 20px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 100%;
+    color: #232134;
+  }
+
+  &__resetButton {
+    color: #acadb9;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__item-title {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: #232134;
+    margin-bottom: 8px;
+  }
 }
