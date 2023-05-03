@@ -34,3 +34,9 @@
     margin-bottom: 8px;
   }
 }
+
+.searchFilters__inputs-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

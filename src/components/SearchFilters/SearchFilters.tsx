@@ -17,7 +17,10 @@ export const SearchFilters: React.FC = () => {
         </li>
         <li className="searchFilters__item">
           <h4 className="searchFilters__item-title">Оклад</h4>
-          <NumberInput />
+          <div className="searchFilters__inputs-wrapper">
+            <NumberInput placeholder="От" step={20}/>
+            <NumberInput placeholder="До"/>
+          </div>
         </li>
       </ul>
     </div>
