@@ -1,4 +1,33 @@
 .search {
   background-color: #ffffff;
   padding: 8px;
+  display: flex;
+
+  &__iconWrapper {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+
+  &__input {
+    width: 100%;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    color: #232134;
+    padding: 2px 0;
+
+    &::placeholder {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 21px;
+      color: #acadb9;
+    }
+  }
+
+  &__submitButton {
+    margin-left: auto;
+    padding: 5.5px 20px;
+    margin-left: 35px;
+  }
 }

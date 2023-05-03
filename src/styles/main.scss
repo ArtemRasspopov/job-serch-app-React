@@ -5,6 +5,18 @@ body {
   font-size: 16px;
   line-height: 120%;
 
-  background-color: #F7F7F8;
+  background-color: #f7f7f8;
   color: #232134;
+}
+
+.button {
+  background: #5e96fc;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

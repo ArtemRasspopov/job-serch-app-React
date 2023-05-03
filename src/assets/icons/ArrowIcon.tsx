@@ -36,8 +36,8 @@ export const ArrowIcon: React.FC<ArrowIconProps> = ({
         <path
           d="M1.49994 1.5L4.60946 4.16531C4.83416 4.3579 5.16572 4.3579 5.39041 4.16531L8.49994 1.5"
           stroke={color === "default" ? "#ACADB9" : "#5E96FC"}
-          stroke-width="1.5"
-          stroke-linecap="round"
+          strokeWidth="1.5"
+          strokeLinecap="round"
         />
       </svg>
     )}

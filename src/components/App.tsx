@@ -1,11 +1,13 @@
 import React from "react";
 import {Header} from "./Header/Header";
-import VacancyPage from "../pages/vacancyPage/VacancyPage";
+// import SearchVacancyPage from "../pages/SearchVacancyPage/SearchVacancyPage";
+import VacancyPage from "../pages/VacancyPage/VacancyPage";
 
 function App() {
   return (
     <div className="app">
       <Header />
+      {/* <SearchVacancyPage/> */}
       <VacancyPage/>
     </div>
   );

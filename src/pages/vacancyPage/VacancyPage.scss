@@ -1,21 +1,9 @@
-.vacancyPage {
-    padding: 40px 0;
+.vacancyPage{
+    margin-top: 40px;
 
     &__inner{
-        display: grid;
-        grid-template-columns: 315px 1fr;
-        gap: 28px;
-    }
-
-    &__content-wrapper{
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 20px;
     }
-}
-
-.vacancy__list{
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
 }

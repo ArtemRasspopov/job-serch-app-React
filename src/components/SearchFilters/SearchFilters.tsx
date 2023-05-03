@@ -18,11 +18,12 @@ export const SearchFilters: React.FC = () => {
         <li className="searchFilters__item">
           <h4 className="searchFilters__item-title">Оклад</h4>
           <div className="searchFilters__inputs-wrapper">
-            <NumberInput placeholder="От" step={20}/>
-            <NumberInput placeholder="До"/>
+            <NumberInput placeholder="От" step={100} min={0} max={1000}/>
+            <NumberInput placeholder="До" step={100} min={0} max={1000}/>
           </div>
         </li>
       </ul>
+      <button type="submit" className="searchFilters__submitButton button">Применить</button>
     </div>
   );
 };

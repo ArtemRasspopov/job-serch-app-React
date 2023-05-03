@@ -34,6 +34,7 @@ export const NumberInput: React.FC<NumberInputProps> = ({
 
   const decrementHamdler = () => {
     const decrementResult = Number(value) - step;
+
     if (min !== undefined) {
       if (decrementResult >= min) {
         setValue((prev) => (prev = decrementResult.toString()));

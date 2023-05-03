@@ -53,11 +53,38 @@
     font-size: 16px;
     line-height: 19px;
     color: #232134;
+
+    &-iconWrapper {
+      display: flex;
+    }
   }
 
-  &__star{
+  &__star {
     display: flex;
     cursor: pointer;
   }
 }
 
+.vacancyCard.--big {
+  .vacancyCard__title {
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 34px;
+    color: #232134;
+    margin-bottom: 16px;
+  }
+
+  .vacancyCard__descr-list {
+    margin-bottom: 16px;
+  }
+
+  .vacancyCard__descr-item:first-child {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
+  }
+
+  .vacancyCard__descr-item:not(:first-child) {
+    font-size: 20px;
+  }
+}
