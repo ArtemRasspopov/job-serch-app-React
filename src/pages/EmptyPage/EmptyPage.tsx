@@ -5,7 +5,7 @@ import "./EmptyPage.scss";
 const EmptyPage: React.FC = () => {
   return (
     <div className="emptyPage">
-      <div>
+      <div className="emptyPage__image-wrapper">
         <img
           className="emptyPage__image"
           src={emptyPageIcon}

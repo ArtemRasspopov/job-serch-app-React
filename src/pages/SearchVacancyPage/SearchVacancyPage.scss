@@ -1,4 +1,4 @@
-.vacancyPage {
+.searchVacancyPage {
     padding: 40px 0;
 
     &__inner{
@@ -14,7 +14,7 @@
     }
 }
 
-.vacancy__list{
+.vacancies__list{
     display: flex;
     flex-direction: column;
     gap: 16px;

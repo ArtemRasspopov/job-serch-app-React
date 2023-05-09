@@ -4,30 +4,34 @@ import { VacancyCard } from "../../components/VacancyCard/VacancyCard";
 import { SearchFilters } from "../../components/SearchFilters/SearchFilters";
 import { Search } from "../../components/Search/Search";
 import "./SearchVacancyPage.scss";
+import { useSerchVacanciesQuery } from "../../store/vacancies/vacancies.api";
 
 const SearchVacancyPage: React.FC = () => {
+  const { data: VacancysData } = useSerchVacanciesQuery(50000, {
+    refetchOnFocus: true,
+  });
+
+  console.log(VacancysData);
+
+  const searchHandler = (searchValue: string) => {
+    console.log(searchValue);
+  };
+
   return (
-    <div className="vacancyPage">
+    <div className="searchVacancyPage">
       <PageContainer>
-        <div className="vacancyPage__inner">
-          <div className="vacancyPage__filters-wrapper">
+        <div className="searchVacancyPage__inner">
+          <div className="searchVacancyPage__filters-wrapper">
             <SearchFilters />
           </div>
-          <div className="vacancyPage__content-wrapper">
-            <Search />
-            <ul className="vacancy__list">
-              <li className="vacancy__item">
-                <VacancyCard />
-              </li>
-              <li className="vacancy__item">
-                <VacancyCard />
-              </li>
-              <li className="vacancy__item">
-                <VacancyCard />
-              </li>
-              <li className="vacancy__item">
-                <VacancyCard />
-              </li>
+          <div className="searchVacancyPage__content-wrapper">
+            <Search searchHandler={(string) => searchHandler(string)} />
+            <ul className="vacancies__list">
+              {VacancysData?.map((vacancy, index) => (
+                <li className="vacancies__item" key={index}>
+                  <VacancyCard vacancy={vacancy} />
+                </li>
+              ))}
             </ul>
           </div>
         </div>
