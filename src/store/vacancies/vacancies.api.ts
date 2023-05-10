@@ -1,6 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IVacancy, ServerResponce } from "../../models/models";
 
+interface getVacanciesProps {
+  keywords?: string[];
+  payment_from?: number;
+  payment_to?: number;
+  page?: number;
+  count?: number;
+}
+
 export const vacanciesApi = createApi({
   reducerPath: "vacancies/api",
   baseQuery: fetchBaseQuery({
@@ -15,13 +23,20 @@ export const vacanciesApi = createApi({
   }),
   refetchOnFocus: true,
   endpoints: (build) => ({
-    serchVacancies: build.query<IVacancy[], number>({
-      query: (paymentFrom: number) => ({
+    getVacancies: build.query<IVacancy[], getVacanciesProps>({
+      query: ({
+        keywords,
+        payment_from,
+        payment_to,
+        page = 1,
+      }: getVacanciesProps) => ({
         url: "vacancies",
         params: {
-          payment_from: paymentFrom,
-          count: 4,
-          page: 1,
+          keyword: keywords,
+          // payment_from: payment_from,
+          // payment_to: payment_to,
+          // count: 4,
+          page: page,
         },
       }),
       transformResponse: (responce: ServerResponce<IVacancy>) =>
@@ -35,4 +50,8 @@ export const vacanciesApi = createApi({
   }),
 });
 
-export const { useSerchVacanciesQuery, useLazyGetVacancyQuery } = vacanciesApi;
+export const {
+  useLazyGetVacanciesQuery,
+  useGetVacanciesQuery,
+  useLazyGetVacancyQuery,
+} = vacanciesApi;

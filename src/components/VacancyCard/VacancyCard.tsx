@@ -27,7 +27,7 @@ export const VacancyCard: React.FC<VacancyCardProps> = ({
 
         <ul className="vacancyCard__descr-list">
           <li className="vacancyCard__descr-item">
-            з/п от {vacancy?.payment_from} rub
+            з/п от {vacancy?.payment_from + " " + vacancy?.currency} 
           </li>
           <li className="vacancyCard__descr-item">
             {vacancy?.type_of_work.title}
@@ -41,7 +41,7 @@ export const VacancyCard: React.FC<VacancyCardProps> = ({
         </div>
       </div>
       <button className="vacancyCard__star">
-        <StarIcon isActive={true} />
+        <StarIcon isActive={vacancy?.favorite} />
       </button>
     </div>
   );

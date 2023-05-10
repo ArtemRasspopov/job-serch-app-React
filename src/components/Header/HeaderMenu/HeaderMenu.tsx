@@ -5,8 +5,9 @@ import { Link, useLocation } from "react-router-dom";
 export const HeaderMenu: React.FC = () => {
   const menuItems = [
     { title: "Поиск Вакансий", link: "/" },
-    { title: "Избранное", link: "/vacancy" },
+    { title: "Избранное", link: "/favourites" },
   ];
+  
   const location = useLocation();
 
   return (
