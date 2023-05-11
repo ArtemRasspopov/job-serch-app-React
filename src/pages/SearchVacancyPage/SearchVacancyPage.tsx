@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { PageContainer } from "../../components/containers/PageContainer/PageContainer";
 import { VacancyCard } from "../../components/VacancyCard/VacancyCard";
 import { SearchFilters } from "../../components/SearchFilters/SearchFilters";
 import { Search } from "../../components/Search/Search";
 import "./SearchVacancyPage.scss";
-import { useGetVacanciesQuery, useLazyGetVacanciesQuery } from "../../store/vacancies/vacancies.api";
+import {
+  useGetVacanciesQuery,
+} from "../../store/vacancies/vacancies.api";
 
 const SearchVacancyPage: React.FC = () => {
+  const [value, setValue] = useState<string>("driver");
 
+  const { data: vacancysData } = useGetVacanciesQuery(
+    { keywords: value.split(" "), page : 1 },
+    {
+      refetchOnFocus: true,
+    }
+  );
 
-
-  // const { data: vacancysData } = useGetVacanciesQuery({}, {refetchOnFocus: true,});
-  const [getData, {data : vacancysData}] = useLazyGetVacanciesQuery()
-
-  useEffect(() => {
-    getData({})
-  }, [getData])
-
-  console.log(vacancysData);
-
-  const searchHandler = async (searchValue: string) => {
+  const searchHandler = (searchValue: string) => {
     console.log(searchValue);
+    setValue(searchValue);
   };
 
   return (
@@ -31,7 +31,7 @@ const SearchVacancyPage: React.FC = () => {
             <SearchFilters />
           </div>
           <div className="searchVacancyPage__content-wrapper">
-            <Search searchHandler={(string) => searchHandler(string)} />
+            <Search searchHandler={searchHandler} value={value} button={true}/>
             <ul className="vacancies__list">
               {vacancysData?.map((vacancy, index) => (
                 <li className="vacancies__item" key={index}>

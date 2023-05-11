@@ -1,16 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IVacancy, ServerResponce } from "../../models/models";
-
-interface getVacanciesProps {
-  keywords?: string[];
-  payment_from?: number;
-  payment_to?: number;
-  page?: number;
-  count?: number;
-}
+import { IVacancy, ServerResponce, getVacanciesProps } from "../../models/models";
 
 export const vacanciesApi = createApi({
   reducerPath: "vacancies/api",
+  tagTypes : [],
   baseQuery: fetchBaseQuery({
     baseUrl: "https://startup-summer-2023-proxy.onrender.com/2.0/",
     headers: {

@@ -5,16 +5,33 @@ import { useDebonce } from "../../hooks/debonce";
 
 interface SearchProps {
   searchHandler: (string: string) => void;
+  value: string;
+  button?: boolean;
 }
 
-export const Search: React.FC<SearchProps> = ({ searchHandler }) => {
-  const [serchValue, setSerchValue] = useState("");
+export const Search: React.FC<SearchProps> = ({
+  searchHandler,
+  value,
+  button = false,
+}) => {
+  const [serchValue, setSerchValue] = useState(value);
 
   const debounced = useDebonce(serchValue);
 
   useEffect(() => {
+    if (!debounced) {
+      searchHandler("");
+    } else if (!button) {
+      searchHandler(debounced);
+    }
+  }, [debounced, searchHandler, button]);
+
+  const buttonClickHandler = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault();
     searchHandler(debounced);
-  }, [debounced, searchHandler]);
+  };
 
   return (
     <form className="search">
@@ -28,9 +45,15 @@ export const Search: React.FC<SearchProps> = ({ searchHandler }) => {
         value={serchValue}
         onChange={(event) => setSerchValue(event.target.value)}
       />
-      <button className="search__submitButton button" type="submit">
-        Поиск
-      </button>
+      {button && (
+        <button
+          className="search__submitButton button"
+          type="submit"
+          onClick={(event) => buttonClickHandler(event)}
+        >
+          Поиск
+        </button>
+      )}
     </form>
   );
 };

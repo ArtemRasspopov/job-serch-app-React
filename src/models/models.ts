@@ -1,3 +1,11 @@
+export interface getVacanciesProps {
+  keywords?: string[];
+  payment_from?: number;
+  payment_to?: number;
+  page?: number;
+  count?: number;
+}
+
 export interface ServerResponce<T> {
     objects: T[]
     total: number
