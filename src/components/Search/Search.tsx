@@ -7,12 +7,14 @@ interface SearchProps {
   searchHandler: (string: string) => void;
   value: string;
   button?: boolean;
+  placeholder?: string
 }
 
 export const Search: React.FC<SearchProps> = ({
   searchHandler,
   value,
   button = false,
+  placeholder
 }) => {
   const [serchValue, setSerchValue] = useState(value);
 
@@ -41,7 +43,7 @@ export const Search: React.FC<SearchProps> = ({
       <input
         className="search__input"
         type="text"
-        placeholder="Введите название вакансии"
+        placeholder={placeholder}
         value={serchValue}
         onChange={(event) => setSerchValue(event.target.value)}
       />

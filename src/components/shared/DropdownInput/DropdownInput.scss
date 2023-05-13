@@ -10,10 +10,19 @@
       justify-content: space-between;
       align-items: center;
       width: 100%;
+      text-align: left;
 
       font-size: 14px;
       line-height: 20px;
       color: #acadb9;
+    }
+
+    &.--active {
+      
+      button {
+        border-color: #5E96FC;
+        color: #232134;
+      }
     }
 
     &-arrow {
@@ -32,6 +41,7 @@
   &__list {
     height: 0;
     flex-direction: column;
+    padding: 0 4px;
 
     overflow-y: scroll;
     transition: all 0.3s;
@@ -54,11 +64,18 @@
   }
 
   &__list-item {
+    text-align: left;
     padding: 8px;
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
     color: #232134;
     cursor: pointer;
+
+    &.--active{
+      border-radius: 8px;
+      background-color: #5E96FC;
+      color: #FFFFFF;
+    }
   }
 }

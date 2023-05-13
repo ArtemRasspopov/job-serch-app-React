@@ -2,27 +2,42 @@ import React, { useState } from "react";
 import "./DropdownInput.scss";
 import { ArrowIcon } from "../../../assets/icons/ArrowIcon";
 
-export const DropdownInput: React.FC = () => {
-  const items = [
-    "IT, интернет, связь, телеком",
-    "Кадры, управление персоналом",
-    " Искусство, культура, развлечения",
-    "Банки, инвестиции, лизинг",
-    "Дизайн",
-    "тест",
-  ];
+interface IDataItem {
+  title: string;
+  key: number;
+}
 
-  const [dropdownIsActive, setDropdownIsActive] = useState(false);
+interface DropdownInputProps {
+  data?: IDataItem[];
+  onChange?: (key: number) => void;
+}
+
+export const DropdownInput: React.FC<DropdownInputProps> = ({
+  data = [],
+  onChange,
+}) => {
+  const [dropdownIsActive, setDropdownIsActive] = useState<boolean>(false);
+  const [activeItem, setActiveItem] = useState<number | null>(null);
 
   const dropdownInputClickHandler = () => {
     setDropdownIsActive((prev) => (prev = !prev));
   };
 
+  const itemClickHandler = (event: any) => {
+    const index = parseInt(event.target.value);
+    if (onChange) {
+      onChange(data[index].key);
+    }
+    setActiveItem((prev) => (prev = index));
+  };
+
   return (
     <div className="dropdownInput">
-      <div className="dropdownInput__button">
+      <div
+        className={`dropdownInput__button ${activeItem !== null && "--active"}`}
+      >
         <button onClick={() => dropdownInputClickHandler()}>
-          Выберете отрасль
+          {activeItem !== null ? data[activeItem].title : "Выберете отрасль"}
         </button>
         <div
           className={`dropdownInput__button-arrow ${
@@ -32,13 +47,18 @@ export const DropdownInput: React.FC = () => {
           <ArrowIcon color={dropdownIsActive ? "active" : "default"} />
         </div>
       </div>
-      <ul
-        className={`dropdownInput__list ${dropdownIsActive ? "--active" : ""}`}
-      >
-        {items.map((item, index) => (
-          <li className="dropdownInput__list-item" key={index}>
-            {item}
-          </li>
+      <ul className={`dropdownInput__list ${dropdownIsActive && "--active"}`}>
+        {data.map((item, index) => (
+          <button
+            className={`dropdownInput__list-item ${
+              index === activeItem && "--active"
+            }`}
+            value={index}
+            key={index}
+            onClick={(event) => itemClickHandler(event)}
+          >
+            {item.title}
+          </button>
         ))}
       </ul>
     </div>

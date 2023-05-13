@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IVacancy, ServerResponce, getVacanciesProps } from "../../models/models";
+import { IVacancy, VacancysServerResponce, getVacanciesProps } from "../../models/models";
 
 export const vacanciesApi = createApi({
   reducerPath: "vacancies/api",
@@ -18,21 +18,23 @@ export const vacanciesApi = createApi({
   endpoints: (build) => ({
     getVacancies: build.query<IVacancy[], getVacanciesProps>({
       query: ({
-        keywords,
+        keyword,
         payment_from,
         payment_to,
         page = 1,
+        catalogues = 0
       }: getVacanciesProps) => ({
         url: "vacancies",
         params: {
-          keyword: keywords,
-          // payment_from: payment_from,
-          // payment_to: payment_to,
-          // count: 4,
+          keyword,
+          payment_from: payment_from,
+          payment_to: payment_to,
+          count: 4,
           page: page,
+          catalogues
         },
       }),
-      transformResponse: (responce: ServerResponce<IVacancy>) =>
+      transformResponse: (responce: VacancysServerResponce<IVacancy>) =>
         responce.objects,
     }),
     getVacancy: build.query<IVacancy, number>({
