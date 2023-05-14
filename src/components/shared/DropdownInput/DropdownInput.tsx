@@ -38,7 +38,7 @@ export const DropdownInput: React.FC<DropdownInputProps> = ({
         className={`dropdownInput__button ${dropdownIsActive && "--active"} ${activeItem && "--selecting"}`}
       >
         <button onClick={() => dropdownOpenHandler()}>
-          <p>{activeItem ? data[activeItem] : "Выберете отрасль"}</p>
+          <p>{activeItem ? data[activeItem - 1] : "Выберете отрасль"}</p>
         </button>
         <div
           className={`dropdownInput__button-arrow ${

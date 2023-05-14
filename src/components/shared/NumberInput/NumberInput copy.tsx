@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./NumberInput.scss";
 import { ArrowIcon } from "../../../assets/icons/ArrowIcon";
 
@@ -7,62 +7,41 @@ interface NumberInputProps {
   step?: number;
   min?: number | undefined;
   max?: number | undefined;
-  value: number;
-  onChange: (set: React.SetStateAction<number>) => void;
+
 }
 
 export const NumberInput: React.FC<NumberInputProps> = ({
   placeholder,
   step = 1,
-  value = 0,
-  min = undefined,
-  max = undefined,
-  onChange,
+  min,
+  max,
 }) => {
+  const [value, setValue] = useState<string>("0");
+
   const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    if (value === "") {
-      onChange(0);
-    } else {
-      onChange(parseFloat(value));
-    }
+    setValue((prev) => (prev = event.target.value));
   };
 
   const incrementHandler = () => {
+    const incrementResult = Number(value) + step;
     if (max !== undefined) {
-      if (min !== undefined) {
-        if (value < min) {
-          onChange(min);
-        } else {
-          if (value + step <= max) {
-            onChange(value + step);
-          }
-        }
+      if (incrementResult <= max) {
+        setValue((prev) => (prev = incrementResult.toString()));
       }
     } else {
-      onChange(value + step);
+      setValue((prev) => (prev = incrementResult.toString()));
     }
   };
 
   const decrementHamdler = () => {
-    if (max !== undefined) {
-      if (value > max) {
-        onChange(max);
-      } else if (min !== undefined) {
-        if (value - step >= min) {
-          onChange(value - step);
-        }
-      } else {
-        onChange(value - step);
+    const decrementResult = Number(value) - step;
+
+    if (min !== undefined) {
+      if (decrementResult >= min) {
+        setValue((prev) => (prev = decrementResult.toString()));
       }
     } else {
-      if (min !== undefined) {
-        if (value - step >= min) {
-          onChange(value - step);
-        }
-      } else {
-        onChange(value - step);
-      }
+      setValue((prev) => (prev = decrementResult.toString()));
     }
   };
 
@@ -71,8 +50,9 @@ export const NumberInput: React.FC<NumberInputProps> = ({
       <input
         className="numberInput__input"
         type="number"
-        value={value !== 0 ? value : ""}
+        value={value !== "0" ? value : ""}
         placeholder={placeholder}
+        // max={"600"}
         onChange={(event) => inputHandler(event)}
       />
       <div className="numberInput__buttons">

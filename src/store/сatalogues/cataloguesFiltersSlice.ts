@@ -27,13 +27,13 @@ export const cataloguesFiltersSlice = createSlice({
     setPaymentFrom: (state, action: PayloadAction<number>) => {
       state.payment_from = action.payload;
     },
-    setPaymentTp: (state, action: PayloadAction<number>) => {
+    setPaymentTo: (state, action: PayloadAction<number>) => {
       state.payment_to = action.payload;
     },
   },
 });
 
-export const { setCatalogues, setSearch, setPaymentFrom, setPaymentTp } =
+export const { setCatalogues, setSearch, setPaymentFrom, setPaymentTo } =
   cataloguesFiltersSlice.actions;
 
 export default cataloguesFiltersSlice.reducer;

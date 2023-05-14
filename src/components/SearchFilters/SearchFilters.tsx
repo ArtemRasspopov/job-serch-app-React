@@ -4,26 +4,40 @@ import { DropdownInput } from "../shared/DropdownInput/DropdownInput";
 import { NumberInput } from "../shared/NumberInput/NumberInput";
 import { useGetCataloguesQuery } from "../../store/сatalogues/catalogues.api";
 import { useAppDispatch } from "../../hooks/redux";
-import { setCatalogues } from "../../store/сatalogues/cataloguesFiltersSlice";
+import {
+  setCatalogues,
+  setPaymentFrom,
+  setPaymentTo,
+} from "../../store/сatalogues/cataloguesFiltersSlice";
 
 export const SearchFilters: React.FC = () => {
   const { data: cataloguesData } = useGetCataloguesQuery({});
-  const [activeCatalogues, SetActiveCatalogues] = useState<number>(0);
+  const [activeCatalogues, setActiveCatalogues] = useState<number>(0);
+  const [paymentFromValue, setPaymentFromValue] = useState<number>(0);
+  const [paymentToValue, setPaymentToValue] = useState<number>(0);
   const dispatch = useAppDispatch();
 
   const formSubmitHandler = () => {
     if (cataloguesData) {
-      dispatch(setCatalogues(cataloguesData[activeCatalogues - 1].key));
+      if (activeCatalogues) {
+        dispatch(setCatalogues(cataloguesData[activeCatalogues - 1].key));
+      }
     }
+    dispatch(setPaymentFrom(paymentFromValue))
+    dispatch(setPaymentTo(paymentToValue))
   };
 
   const resetHandler = () => {
-    SetActiveCatalogues((prev) => (prev = 0));
+    setActiveCatalogues((prev) => (prev = 0));
+    setPaymentFromValue((prev) => (prev = 0));
+    setPaymentToValue((prev) => (prev = 0));
     dispatch(setCatalogues(0));
+    dispatch(setPaymentFrom(0))
+    dispatch(setPaymentTo(0))
   };
 
   const changeCataloguesHandler = (index: number) => {
-    SetActiveCatalogues(index);
+    setActiveCatalogues(index);
   };
 
   return (
@@ -49,8 +63,21 @@ export const SearchFilters: React.FC = () => {
         <li className="searchFilters__item">
           <h4 className="searchFilters__item-title">Оклад</h4>
           <div className="searchFilters__inputs-wrapper">
-            <NumberInput placeholder="От" step={100} min={0} max={1000} />
-            <NumberInput placeholder="До" step={100} min={0} max={1000} />
+            <NumberInput
+              placeholder="От"
+              step={1000}
+              min={0}
+              value={paymentFromValue}
+              onChange={setPaymentFromValue}
+            />
+            <NumberInput
+              placeholder="До"
+              step={1000}
+              min={paymentFromValue + 1000}
+              max={100000000}
+              value={paymentToValue}
+              onChange={setPaymentToValue}
+            />
           </div>
         </li>
       </ul>
