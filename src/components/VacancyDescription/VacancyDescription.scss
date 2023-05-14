@@ -1,21 +1,34 @@
 .vacancyDescription {
   padding: 24px;
+  flex-grow: 1;
   background: #ffffff;
+  display: flex;
 
-  &__paragraph:not(:first-child) {
-    margin-top: 20px;
-  }
-
-  &__title {
+  b {
     font-weight: 700;
     font-size: 20px;
     line-height: 20px;
     color: #232134;
     margin-bottom: 16px;
+    display: block;
   }
 
-  &__list {
-    &-item {
+  p {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 140%;
+    color: #232134;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  br{
+    display: none;
+  }
+
+  ul {
+    margin-bottom: 20px;
+    li {
       font-weight: 400;
       font-size: 16px;
       line-height: 140%;

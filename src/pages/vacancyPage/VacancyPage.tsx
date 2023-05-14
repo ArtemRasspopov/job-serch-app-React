@@ -5,26 +5,36 @@ import { PageContainer } from "../../components/containers/PageContainer/PageCon
 import { VacancyDescription } from "../../components/VacancyDescription/VacancyDescription";
 import { useLazyGetVacancyQuery } from "../../store/vacancies/vacancies.api";
 import { useLocation } from "react-router-dom";
+import { SkeletonBlock } from "../../components/shared/SkeletonBlock/SkeletonBlock";
 
 const VacancyPage: React.FC = () => {
-  const [fetchVacancy, { data: vacancyData }] = useLazyGetVacancyQuery();
+  const [fetchVacancy, { data: vacancyData, isSuccess, isLoading }] =
+    useLazyGetVacancyQuery();
   const location = useLocation();
   const vacancyId = parseInt(
     location.pathname.substring(location.pathname.lastIndexOf("/") + 1)
   );
-
-  console.log(vacancyId);
 
   useEffect(() => {
     fetchVacancy(vacancyId);
   }, [fetchVacancy, vacancyId]);
 
   return (
-    <div className="vacancyPage">
+    <div className="vacancyPage page">
       <PageContainer>
         <div className="vacancyPage__inner">
-          <VacancyCard size="big" vacancy={vacancyData} />
-          <VacancyDescription />
+          {isLoading && (
+            <>
+              <VacancyCard size="big" />
+              <VacancyDescription />
+            </>
+          )}
+          {isSuccess && (
+            <>
+              <VacancyCard size="big" vacancy={vacancyData} />
+              <VacancyDescription vacancy={vacancyData}/>
+            </>
+          )}
         </div>
       </PageContainer>
     </div>

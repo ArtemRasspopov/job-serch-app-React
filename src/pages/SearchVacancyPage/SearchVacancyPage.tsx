@@ -14,8 +14,18 @@ const SearchVacancyPage: React.FC = () => {
     (state) => state.cataloguesFiltersSlice
   );
 
-  const { data: vacancysData } = useGetVacanciesQuery(
-    { keyword: search.split(" "), page: 1, catalogues, payment_from, payment_to },
+  const {
+    data: vacancysData,
+    isLoading,
+    isSuccess,
+  } = useGetVacanciesQuery(
+    {
+      keyword: search.split(" "),
+      page: 1,
+      catalogues,
+      payment_from,
+      payment_to,
+    },
     {
       refetchOnFocus: true,
     }
@@ -26,7 +36,7 @@ const SearchVacancyPage: React.FC = () => {
   };
 
   return (
-    <div className="searchVacancyPage">
+    <div className="searchVacancyPage page">
       <PageContainer>
         <div className="searchVacancyPage__inner">
           <div className="searchVacancyPage__filters-wrapper">
@@ -40,11 +50,16 @@ const SearchVacancyPage: React.FC = () => {
               placeholder="Введите название вакансии"
             />
             <ul className="vacancies__list">
-              {vacancysData?.map((vacancy, index) => (
-                <li className="vacancies__item" key={index}>
-                  <VacancyCard vacancy={vacancy} />
-                </li>
-              ))}
+              {isLoading &&
+                Array(4)
+                  .fill("")
+                  .map(() => <VacancyCard />)}
+              {isSuccess &&
+                vacancysData.map((vacancy, index) => (
+                  <li className="vacancies__item" key={index}>
+                    <VacancyCard vacancy={vacancy} />
+                  </li>
+                ))}
             </ul>
           </div>
         </div>

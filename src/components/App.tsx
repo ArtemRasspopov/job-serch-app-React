@@ -4,7 +4,7 @@ import EmptyPage from "../pages/EmptyPage/EmptyPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import VacancyPage from "../pages/VacancyPage/VacancyPage";
 import SearchVacancyPage from "../pages/SearchVacancyPage/SearchVacancyPage";
-import FavoriteVacancyPage from "../pages/FavoriteVacancyPage/FavoriteVacancyPage";
+import FavoriteVacancyPage from "../pages/FavoritesVacancyPage/FavoritesVacancyPage";
 
 function App() {
   return (

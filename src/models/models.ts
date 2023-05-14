@@ -218,3 +218,9 @@ export interface IPosition {
   id_parent: number;
   key: number;
 }
+
+export interface FavoritesServerResponce {
+  total: number
+  more: boolean
+  objects: IVacancy[]
+}

@@ -1,7 +1,15 @@
 import React from "react";
 import "./VacancyDescription.scss";
+import { IVacancy } from "../../models/models";
+import { SkeletonBlock } from "../shared/SkeletonBlock/SkeletonBlock";
 
-export const VacancyDescription: React.FC = () => {
+interface VacancyDescriptionProps {
+  vacancy?: IVacancy;
+}
+
+export const VacancyDescription: React.FC<VacancyDescriptionProps> = ({
+  vacancy,
+}) => {
   const vacancyDescriptionData = [
     {
       title: "Обязанности",
@@ -34,18 +42,12 @@ export const VacancyDescription: React.FC = () => {
 
   return (
     <div className="vacancyDescription">
-      {vacancyDescriptionData.map((item, index) => (
-        <div className="vacancyDescription__paragraph" key={index}>
-          <h4 className="vacancyDescription__title">{item.title}:</h4>
-          <ol className="vacancyDescription__list">
-            {item.points.map((item, index) => (
-              <li className="vacancyDescription__list-item" key={index}>
-                {item}
-              </li>
-            ))}
-          </ol>
-        </div>
-      ))}
+      {!vacancy && <SkeletonBlock />}
+      {vacancy && (
+        <>
+          <p dangerouslySetInnerHTML={{ __html: vacancy.vacancyRichText }}></p>
+        </>
+      )}
     </div>
   );
 };

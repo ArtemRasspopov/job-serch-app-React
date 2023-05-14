@@ -1,9 +1,9 @@
 .vacancyPage{
-    margin-top: 40px;
 
     &__inner{
         display: flex;
         flex-direction: column;
         gap: 20px;
+        height: 100%;
     }
 }

@@ -1,8 +1,13 @@
 .vacancyCard {
-  padding: 24px;
   background-color: #ffffff;
-  display: flex;
-  justify-content: space-between;
+  border-radius: 5px;
+  min-height: 135px;
+
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    padding: 24px;
+  }
 
   &__title {
     font-weight: 600;
@@ -66,6 +71,8 @@
 }
 
 .vacancyCard.--big {
+  min-height: 158px;
+
   .vacancyCard__title {
     font-weight: 700;
     font-size: 28px;
