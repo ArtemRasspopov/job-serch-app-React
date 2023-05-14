@@ -15,12 +15,23 @@
       font-size: 14px;
       line-height: 20px;
       color: #acadb9;
+
+      p {
+        max-width: 88%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
 
     &.--active {
-      
       button {
-        border-color: #5E96FC;
+        border-color: #5e96fc;
+      }
+    }
+
+    &.--selecting {
+      button {
         color: #232134;
       }
     }
@@ -72,10 +83,10 @@
     color: #232134;
     cursor: pointer;
 
-    &.--active{
+    &.--active {
       border-radius: 8px;
-      background-color: #5E96FC;
-      color: #FFFFFF;
+      background-color: #5e96fc;
+      color: #ffffff;
     }
   }
 }

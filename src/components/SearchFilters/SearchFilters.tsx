@@ -8,35 +8,42 @@ import { setCatalogues } from "../../store/сatalogues/cataloguesFiltersSlice";
 
 export const SearchFilters: React.FC = () => {
   const { data: cataloguesData } = useGetCataloguesQuery({});
-  const [activeCatalogues, SetActiveCatalogues] = useState(0);
+  const [activeCatalogues, SetActiveCatalogues] = useState<number>(0);
   const dispatch = useAppDispatch();
 
-  const cataloguesInputHandler = (value: number) => {
-    SetActiveCatalogues(prev => prev = value)
-  };
-
   const formSubmitHandler = () => {
-    dispatch(setCatalogues(activeCatalogues));
+    if (cataloguesData) {
+      dispatch(setCatalogues(cataloguesData[activeCatalogues - 1].key));
+    }
   };
 
   const resetHandler = () => {
-    SetActiveCatalogues(prev => prev = 0)
-  }
+    SetActiveCatalogues((prev) => (prev = 0));
+    dispatch(setCatalogues(0));
+  };
+
+  const changeCataloguesHandler = (index: number) => {
+    SetActiveCatalogues(index);
+  };
 
   return (
     <div className="searchFilters">
       <div className="searchFilters__header">
         <h3 className="searchFilters__title">Фильтры</h3>
-        <button className="searchFilters__resetButton" onClick={() => resetHandler()}>Сбросить все</button>
+        <button
+          className="searchFilters__resetButton"
+          onClick={() => resetHandler()}
+        >
+          Сбросить все
+        </button>
       </div>
       <ul className="searchFilters__list">
         <li className="searchFilters__item">
           <h4 className="searchFilters__item-title">Отрасль</h4>
           <DropdownInput
-            data={cataloguesData?.map((item) => {
-              return { title: item.title, key: item.key };
-            })}      
-            onChange={cataloguesInputHandler}
+            data={cataloguesData?.map((item) => item.title)}
+            activeItem={activeCatalogues}
+            onChange={changeCataloguesHandler}
           />
         </li>
         <li className="searchFilters__item">
@@ -47,7 +54,11 @@ export const SearchFilters: React.FC = () => {
           </div>
         </li>
       </ul>
-      <button type="submit" className="searchFilters__submitButton button" onClick={() => formSubmitHandler()}>
+      <button
+        type="submit"
+        className="searchFilters__submitButton button"
+        onClick={() => formSubmitHandler()}
+      >
         Применить
       </button>
     </div>

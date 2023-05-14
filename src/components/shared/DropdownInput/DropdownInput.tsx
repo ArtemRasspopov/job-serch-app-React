@@ -1,43 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./DropdownInput.scss";
 import { ArrowIcon } from "../../../assets/icons/ArrowIcon";
 
-interface IDataItem {
-  title: string;
-  key: number;
-}
-
 interface DropdownInputProps {
-  data?: IDataItem[];
-  onChange?: (key: number) => void;
+  data?: String[];
+  activeItem?: number;
+  onChange?: (index: number) => void;
 }
 
 export const DropdownInput: React.FC<DropdownInputProps> = ({
   data = [],
+  activeItem = 0,
   onChange,
 }) => {
   const [dropdownIsActive, setDropdownIsActive] = useState<boolean>(false);
-  const [activeItem, setActiveItem] = useState<number | null>(null);
 
-  const dropdownInputClickHandler = () => {
+  useEffect(() => {
+    if (!activeItem) {
+      setDropdownIsActive(false);
+    }
+  }, [activeItem]);
+
+  const dropdownOpenHandler = () => {
     setDropdownIsActive((prev) => (prev = !prev));
   };
 
   const itemClickHandler = (event: any) => {
-    const index = parseInt(event.target.value);
+    const index = parseFloat(event.target.value);
     if (onChange) {
-      onChange(data[index].key);
+      onChange(index);
     }
-    setActiveItem((prev) => (prev = index));
   };
 
   return (
     <div className="dropdownInput">
       <div
-        className={`dropdownInput__button ${activeItem !== null && "--active"}`}
+        className={`dropdownInput__button ${dropdownIsActive && "--active"} ${activeItem && "--selecting"}`}
       >
-        <button onClick={() => dropdownInputClickHandler()}>
-          {activeItem !== null ? data[activeItem].title : "Выберете отрасль"}
+        <button onClick={() => dropdownOpenHandler()}>
+          <p>{activeItem ? data[activeItem] : "Выберете отрасль"}</p>
         </button>
         <div
           className={`dropdownInput__button-arrow ${
@@ -51,13 +52,13 @@ export const DropdownInput: React.FC<DropdownInputProps> = ({
         {data.map((item, index) => (
           <button
             className={`dropdownInput__list-item ${
-              index === activeItem && "--active"
+              index + 1 === activeItem && "--active"
             }`}
-            value={index}
+            value={index + 1}
             key={index}
             onClick={(event) => itemClickHandler(event)}
           >
-            {item.title}
+            {item}
           </button>
         ))}
       </ul>
