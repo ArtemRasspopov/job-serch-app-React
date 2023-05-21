@@ -7,6 +7,7 @@ import "./SearchVacancyPage.scss";
 import { useGetVacanciesQuery } from "../../store/vacancies/vacancies.api";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { setSearch } from "../../store/сatalogues/cataloguesFiltersSlice";
+import { SkeletonBlock } from "../../components/shared/SkeletonBlock/SkeletonBlock";
 
 const SearchVacancyPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -53,10 +54,10 @@ const SearchVacancyPage: React.FC = () => {
               {isLoading &&
                 Array(4)
                   .fill("")
-                  .map(() => <VacancyCard />)}
+                  .map(() => <SkeletonBlock/>)}
               {isSuccess &&
-                vacancysData.map((vacancy, index) => (
-                  <li className="vacancies__item" key={index}>
+                vacancysData.map((vacancy) => (
+                  <li className="vacancies__item" key={vacancy.id}>
                     <VacancyCard vacancy={vacancy} />
                   </li>
                 ))}

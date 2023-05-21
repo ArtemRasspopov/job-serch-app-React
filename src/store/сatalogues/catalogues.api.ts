@@ -10,7 +10,7 @@ export const cataloguesApi = createApi({
       "x-Api-App-Id":
         "v3.r.137440105.ffdbab114f92b821eac4e21f485343924a773131.06c3bdbb8446aeb91c35b80c42ff69eb9c457948",
       Authorization:
-        "Bearer v3.r.137539487.83a741bcccd9ad0bc63f1c428139470f4dd5640b.bc6d09249d0f88093a1e532ec0fa5e709ba55276",
+        "Bearer v3.r.137539487.72ab16220be0e803c82a5b076061d7e373117a87.19d31ca196758164bd22591e8b19740fa458ff5b",
     },
   }),
   refetchOnFocus: true,

@@ -1,26 +1,29 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./FavoritesVacancyPage.scss";
 import { PageContainer } from "../../components/containers/PageContainer/PageContainer";
-import { useLazyGetFavoritesQuery } from "../../store/favorites/favorites.api";
+import { useGetFavoritesQuery } from "../../store/vacancies/vacancies.api";
 import { VacancyCard } from "../../components/VacancyCard/VacancyCard";
+import { SkeletonBlock } from "../../components/shared/SkeletonBlock/SkeletonBlock";
 
 const FavoritesVacancyPage: React.FC = () => {
-  const [getFavorites, {data : favoritesData}] = useLazyGetFavoritesQuery()
-
-  useEffect(() => {
-    getFavorites()
-  }, [getFavorites])
+  const { data: favoritesData, isLoading, isSuccess } = useGetFavoritesQuery();
 
   return (
     <div className="favoritesVacancyPage page">
       <PageContainer>
         <div className="favoritesVacancyPage__inner">
           <ul className="vacancies__list">
-            {favoritesData?.map((vacancy, index) => (
-              <li className="vacancies__item" key={index}>
-                <VacancyCard vacancy={vacancy} />
-              </li>
-            ))}
+            {isLoading &&
+              Array(4)
+                .fill("")
+                .map(() => <SkeletonBlock/>)}
+
+            {isSuccess &&
+              favoritesData.map((vacancy) => (
+                <li className="vacancies__item" key={vacancy.id}>
+                  <VacancyCard vacancy={vacancy} />
+                </li>
+              ))}
           </ul>
         </div>
       </PageContainer>
