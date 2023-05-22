@@ -7,6 +7,11 @@ export interface getVacanciesProps {
   catalogues?: number;
 }
 
+export interface getFavoritesProps {
+  favoritesIds: number[],
+  page?: number
+}
+
 //vacancys types
 
 export interface VacancysServerResponce<T> {

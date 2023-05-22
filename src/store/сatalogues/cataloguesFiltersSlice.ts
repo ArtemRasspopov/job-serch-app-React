@@ -5,6 +5,8 @@ export interface CounterState {
   catalogues: number;
   payment_from: number;
   payment_to: number;
+  page: number
+  favoritesPage: number
 }
 
 const initialState: CounterState = {
@@ -12,6 +14,8 @@ const initialState: CounterState = {
   catalogues: 0,
   payment_from: 0,
   payment_to: 0,
+  page: 0,
+  favoritesPage: 0
 };
 
 export const cataloguesFiltersSlice = createSlice({
@@ -30,10 +34,16 @@ export const cataloguesFiltersSlice = createSlice({
     setPaymentTo: (state, action: PayloadAction<number>) => {
       state.payment_to = action.payload;
     },
+    setPage: (state, action : PayloadAction<number>) => {
+      state.page = action.payload
+    },
+    setFavoritesPage: (state, action : PayloadAction<number>) => {
+      state.favoritesPage = action.payload
+    }
   },
 });
 
-export const { setCatalogues, setSearch, setPaymentFrom, setPaymentTo } =
+export const { setCatalogues, setSearch, setPaymentFrom, setPaymentTo, setPage, setFavoritesPage } =
   cataloguesFiltersSlice.actions;
 
 export default cataloguesFiltersSlice.reducer;

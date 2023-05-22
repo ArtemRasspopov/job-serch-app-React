@@ -47,9 +47,7 @@ export const VacancyCard: React.FC<VacancyCardProps> = ({
             <div className="vacancyCard__content">
               {size === "small" ? (
                 <Link to={`/vacancy/${vacancy.id}`}>
-                  <h3 className="vacancyCard__title">
-                    {vacancy.profession} {vacancy.id}
-                  </h3>
+                  <h3 className="vacancyCard__title">{vacancy.profession}</h3>
                 </Link>
               ) : (
                 <h3 className="vacancyCard__title">{vacancy.profession}</h3>

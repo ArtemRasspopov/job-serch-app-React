@@ -6,17 +6,20 @@ import { Search } from "../../components/Search/Search";
 import "./SearchVacancyPage.scss";
 import { useGetVacanciesQuery } from "../../store/vacancies/vacancies.api";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { setSearch } from "../../store/сatalogues/cataloguesFiltersSlice";
+import {
+  setPage,
+  setSearch,
+} from "../../store/сatalogues/cataloguesFiltersSlice";
 import { setFavorite } from "../../store/favorites/favoritesSlice";
 import { VacancyCardSkeleton } from "../../components/VacancyCard/VacancyCardSkeleton/VacancyCardSkeleton";
+import { Pagination } from "../../components/shared/Pagination/Pagination";
 
 const SearchVacancyPage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const {favoritesData} = useAppSelector(state => state.favoritesSlice)
-  const { catalogues, search, payment_from, payment_to } = useAppSelector(
+  const { favoritesData } = useAppSelector((state) => state.favoritesSlice);
+  const { catalogues, search, payment_from, payment_to, page } = useAppSelector(
     (state) => state.cataloguesFiltersSlice
   );
-
   const {
     data: vacancysData,
     isLoading,
@@ -24,7 +27,7 @@ const SearchVacancyPage: React.FC = () => {
   } = useGetVacanciesQuery(
     {
       keyword: search.split(" "),
-      page: 1,
+      page,
       catalogues,
       payment_from,
       payment_to,
@@ -39,7 +42,12 @@ const SearchVacancyPage: React.FC = () => {
   };
 
   const changeFavoriteHandler = (vacancyId: number) => {
-     dispatch(setFavorite(vacancyId))
+    dispatch(setFavorite(vacancyId));
+  };
+
+  const changePageHandler = (selectedItem: { selected: number }) => {
+    console.log(selectedItem);
+    dispatch(setPage(selectedItem.selected));
   };
 
   return (
@@ -60,7 +68,7 @@ const SearchVacancyPage: React.FC = () => {
               {isLoading &&
                 Array(4)
                   .fill("")
-                  .map(() => <VacancyCardSkeleton/>)}
+                  .map(() => <VacancyCardSkeleton />)}
               {isSuccess &&
                 vacancysData.map((vacancy) => (
                   <li className="vacancies__item" key={vacancy.id}>
@@ -72,6 +80,13 @@ const SearchVacancyPage: React.FC = () => {
                   </li>
                 ))}
             </ul>
+            <div className="pagination__wrapper">
+              <Pagination
+                pageCount={50}
+                activePage={page}
+                changePageHandler={changePageHandler}
+              />
+            </div>
           </div>
         </div>
       </PageContainer>

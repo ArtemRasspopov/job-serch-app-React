@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   IVacancy,
   VacancysServerResponce,
+  getFavoritesProps,
   getVacanciesProps,
 } from "../../models/models";
 
@@ -25,7 +26,7 @@ export const vacanciesApi = createApi({
         keyword,
         payment_from,
         payment_to,
-        page = 1,
+        page = 0,
         catalogues = 0,
       }: getVacanciesProps) => ({
         url: "vacancies/",
@@ -33,7 +34,7 @@ export const vacanciesApi = createApi({
           keyword,
           payment_from: payment_from,
           payment_to: payment_to,
-          page: page,
+          page: page + 1,
           catalogues,
           count: 4,
           published: 1,
@@ -48,18 +49,19 @@ export const vacanciesApi = createApi({
         url: `vacancies/${vacancyId}`,
       }),
     }),
-    getFavorites: build.query<IVacancy[], number[]>({
-      query: (favoritesIds: number[]) => ({
+    getFavorites: build.query<VacancysServerResponce<IVacancy>, getFavoritesProps>({
+      query: ({favoritesIds, page}: getFavoritesProps) => ({
         url: `vacancies/?${favoritesIds
           .map((item) => `ids[]=${item}&`)
           .join("")}`,
         params: {
           count: 4,
+          page,
           published: 1,
         },
       }),
-      transformResponse: (responce: VacancysServerResponce<IVacancy>) =>
-        responce.objects,
+      // transformResponse: (responce: VacancysServerResponce<IVacancy>) =>
+      //   responce.objects,
     }),
   }),
 });
@@ -67,7 +69,6 @@ export const vacanciesApi = createApi({
 export const {
   useLazyGetVacanciesQuery,
   useGetVacanciesQuery,
-
   useGetVacancyQuery,
   useGetFavoritesQuery,
   useLazyGetFavoritesQuery,
