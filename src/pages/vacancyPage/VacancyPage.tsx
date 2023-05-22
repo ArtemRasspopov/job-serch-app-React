@@ -8,11 +8,13 @@ import { useLocation } from "react-router-dom";
 import { useAppSelector } from "../../hooks/redux";
 import { useDispatch } from "react-redux";
 import { setFavorite } from "../../store/favorites/favoritesSlice";
+import { VacancyCardSkeleton } from "../../components/VacancyCard/VacancyCardSkeleton/VacancyCardSkeleton";
+import { VacancyDescriptionSkeleton } from "../../components/VacancyDescription/VacancyDescriptionSkeleton/VacancyDescriptionSkeleton";
 
 const VacancyPage: React.FC = () => {
   const location = useLocation();
-  const {favoritesData} = useAppSelector(state => state.favoritesSlice)
-  const dispatch = useDispatch()
+  const { favoritesData } = useAppSelector((state) => state.favoritesSlice);
+  const dispatch = useDispatch();
   const vacancyId = parseInt(
     location.pathname.substring(location.pathname.lastIndexOf("/") + 1)
   );
@@ -22,15 +24,20 @@ const VacancyPage: React.FC = () => {
     isLoading,
   } = useGetVacancyQuery(vacancyId);
 
-  const changeFavoriteHandler = (vacancyId : number) => {
-    dispatch(setFavorite(vacancyId))
+  const changeFavoriteHandler = (vacancyId: number) => {
+    dispatch(setFavorite(vacancyId));
   };
 
   return (
     <div className="vacancyPage page">
       <PageContainer>
         <div className="vacancyPage__inner">
-          {isLoading && <></>}
+          {isLoading && (
+            <>
+              <VacancyCardSkeleton size="big" />
+              <VacancyDescriptionSkeleton />
+            </>
+          )}
           {isSuccess && (
             <>
               <VacancyCard

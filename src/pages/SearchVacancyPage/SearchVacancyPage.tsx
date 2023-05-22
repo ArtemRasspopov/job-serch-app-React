@@ -8,6 +8,7 @@ import { useGetVacanciesQuery } from "../../store/vacancies/vacancies.api";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { setSearch } from "../../store/сatalogues/cataloguesFiltersSlice";
 import { setFavorite } from "../../store/favorites/favoritesSlice";
+import { VacancyCardSkeleton } from "../../components/VacancyCard/VacancyCardSkeleton/VacancyCardSkeleton";
 
 const SearchVacancyPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -59,7 +60,7 @@ const SearchVacancyPage: React.FC = () => {
               {isLoading &&
                 Array(4)
                   .fill("")
-                  .map(() => <></>)}
+                  .map(() => <VacancyCardSkeleton/>)}
               {isSuccess &&
                 vacancysData.map((vacancy) => (
                   <li className="vacancies__item" key={vacancy.id}>
