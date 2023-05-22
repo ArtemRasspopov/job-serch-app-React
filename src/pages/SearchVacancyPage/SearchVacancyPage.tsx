@@ -7,10 +7,11 @@ import "./SearchVacancyPage.scss";
 import { useGetVacanciesQuery } from "../../store/vacancies/vacancies.api";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { setSearch } from "../../store/сatalogues/cataloguesFiltersSlice";
-import { SkeletonBlock } from "../../components/shared/SkeletonBlock/SkeletonBlock";
+import { setFavorite } from "../../store/favorites/favoritesSlice";
 
 const SearchVacancyPage: React.FC = () => {
   const dispatch = useAppDispatch();
+  const {favoritesData} = useAppSelector(state => state.favoritesSlice)
   const { catalogues, search, payment_from, payment_to } = useAppSelector(
     (state) => state.cataloguesFiltersSlice
   );
@@ -36,6 +37,10 @@ const SearchVacancyPage: React.FC = () => {
     dispatch(setSearch(value));
   };
 
+  const changeFavoriteHandler = (vacancyId: number) => {
+     dispatch(setFavorite(vacancyId))
+  };
+
   return (
     <div className="searchVacancyPage page">
       <PageContainer>
@@ -54,11 +59,15 @@ const SearchVacancyPage: React.FC = () => {
               {isLoading &&
                 Array(4)
                   .fill("")
-                  .map(() => <SkeletonBlock/>)}
+                  .map(() => <></>)}
               {isSuccess &&
                 vacancysData.map((vacancy) => (
                   <li className="vacancies__item" key={vacancy.id}>
-                    <VacancyCard vacancy={vacancy} />
+                    <VacancyCard
+                      vacancy={vacancy}
+                      isFavorite={favoritesData.includes(vacancy.id)}
+                      changeFavoriteHandler={changeFavoriteHandler}
+                    />
                   </li>
                 ))}
             </ul>

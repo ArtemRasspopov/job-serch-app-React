@@ -1,30 +1,52 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./FavoritesVacancyPage.scss";
 import { PageContainer } from "../../components/containers/PageContainer/PageContainer";
-import { useGetFavoritesQuery } from "../../store/vacancies/vacancies.api";
 import { VacancyCard } from "../../components/VacancyCard/VacancyCard";
-import { SkeletonBlock } from "../../components/shared/SkeletonBlock/SkeletonBlock";
+import { useLazyGetFavoritesQuery } from "../../store/vacancies/vacancies.api";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { setFavorite } from "../../store/favorites/favoritesSlice";
 
 const FavoritesVacancyPage: React.FC = () => {
-  const { data: favoritesData, isLoading, isSuccess } = useGetFavoritesQuery();
+  const { favoritesData } = useAppSelector((state) => state.favoritesSlice);
+  const [
+    getFavoritesHandler,
+    { data: fetchFavoritesData, isLoading, isSuccess },
+  ] = useLazyGetFavoritesQuery();
+  const dispatch = useAppDispatch();
+
+  const changeFavoriteHandler = (vacancyId: number) => {
+    dispatch(setFavorite(vacancyId));
+  };
+
+  useEffect(() => {
+    if (favoritesData) {
+      getFavoritesHandler(favoritesData);
+    }
+  }, [favoritesData, getFavoritesHandler]);
 
   return (
     <div className="favoritesVacancyPage page">
       <PageContainer>
         <div className="favoritesVacancyPage__inner">
-          <ul className="vacancies__list">
-            {isLoading &&
-              Array(4)
-                .fill("")
-                .map(() => <SkeletonBlock/>)}
-
-            {isSuccess &&
-              favoritesData.map((vacancy) => (
-                <li className="vacancies__item" key={vacancy.id}>
-                  <VacancyCard vacancy={vacancy} />
-                </li>
-              ))}
-          </ul>
+          {favoritesData.length && (
+            <ul className="vacancies__list">
+              {isLoading &&
+                Array(4)
+                  .fill("")
+                  .map(() => <></>)}
+              {isSuccess &&
+                fetchFavoritesData?.map((vacancy) => (
+                  <li className="vacancies__item" key={vacancy.id}>
+                    <VacancyCard
+                      vacancy={vacancy}
+                      isFavorite={favoritesData.includes(vacancy.id)}
+                      removable={true}
+                      changeFavoriteHandler={changeFavoriteHandler}
+                    />
+                  </li>
+                ))}
+            </ul>
+          )}
         </div>
       </PageContainer>
     </div>

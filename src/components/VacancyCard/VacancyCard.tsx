@@ -4,44 +4,41 @@ import "./VacancyCard.scss";
 
 import { StarIcon } from "../../assets/icons/StarIcon";
 import { IVacancy } from "../../models/models";
-import { Link, useLocation } from "react-router-dom";
-
-import {
-  useAddFavoritesMutation,
-  useRemoveFavoritesMutation,
-} from "../../store/vacancies/vacancies.api";
+import { Link } from "react-router-dom";
 
 interface VacancyCardProps {
   size?: "small" | "big";
   vacancy?: IVacancy;
-  isLoading?: boolean
+  isLoading?: boolean;
+  isFavorite: boolean;
+  removable?: boolean;
+  changeFavoriteHandler: (vacancyId: number) => void;
 }
 
 export const VacancyCard: React.FC<VacancyCardProps> = ({
   size = "small",
   vacancy,
+  removable = false,
+  changeFavoriteHandler,
+  isFavorite,
 }) => {
-  const [fetchAddFavorites] = useAddFavoritesMutation();
-  const [fetchRemoveFavorite] = useRemoveFavoritesMutation();
-  const [isFavorite, setIsfavorite] = useState(vacancy?.favorite);
-  const location = useLocation();
+  const [isDisabled, setIsDisabled] = useState(false);
 
-  const favoritesHandler = () => {
-    if (vacancy) {
-      if (isFavorite) {
-        setIsfavorite((prev) => (prev = false));
-        fetchRemoveFavorite(vacancy.id);
-      } else {
-        setIsfavorite((prev) => (prev = true));
-        fetchAddFavorites(vacancy.id);
-      }
+  const starHandler = (vacancyId: number) => {
+    if (removable) {
+      setIsDisabled(true);
+      setTimeout(() => {
+        changeFavoriteHandler(vacancyId);
+      }, 1000);
+    } else {
+      changeFavoriteHandler(vacancyId);
     }
   };
 
   return (
     <div
       className={`vacancyCard ${size === "big" && "--big"} ${
-        location.pathname === "/favourites" && !isFavorite && "--disabled"
+        isDisabled && "--disabled"
       }`}
     >
       {vacancy && (
@@ -50,7 +47,9 @@ export const VacancyCard: React.FC<VacancyCardProps> = ({
             <div className="vacancyCard__content">
               {size === "small" ? (
                 <Link to={`/vacancy/${vacancy.id}`}>
-                  <h3 className="vacancyCard__title">{vacancy.profession}</h3>
+                  <h3 className="vacancyCard__title">
+                    {vacancy.profession} {vacancy.id}
+                  </h3>
                 </Link>
               ) : (
                 <h3 className="vacancyCard__title">{vacancy.profession}</h3>
@@ -73,7 +72,10 @@ export const VacancyCard: React.FC<VacancyCardProps> = ({
                 </p>
               </div>
             </div>
-            <button className="vacancyCard__star" onClick={favoritesHandler}>
+            <button
+              className="vacancyCard__star"
+              onClick={() => starHandler(vacancy.id)}
+            >
               <StarIcon isActive={isFavorite} />
             </button>
           </div>

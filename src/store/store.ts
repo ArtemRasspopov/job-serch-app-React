@@ -1,3 +1,4 @@
+import  favoritesSlice from './favorites/favoritesSlice';
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { vacanciesApi } from "./vacancies/vacancies.api";
@@ -8,8 +9,9 @@ export const store = configureStore({
   reducer: {
     [cataloguesApi.reducerPath]: cataloguesApi.reducer,
     [vacanciesApi.reducerPath]: vacanciesApi.reducer,
-
-    cataloguesFiltersSlice: cataloguesFiltersSlice,
+    // favoritesSlice: favoritesSlice,
+    cataloguesFiltersSlice,
+    favoritesSlice
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()

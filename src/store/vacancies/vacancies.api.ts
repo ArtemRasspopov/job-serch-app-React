@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
-  FavoritesServerResponce,
   IVacancy,
   VacancysServerResponce,
   getVacanciesProps,
@@ -29,24 +28,18 @@ export const vacanciesApi = createApi({
         page = 1,
         catalogues = 0,
       }: getVacanciesProps) => ({
-        url: "vacancies",
+        url: "vacancies/",
         params: {
           keyword,
           payment_from: payment_from,
           payment_to: payment_to,
-          count: 4,
           page: page,
           catalogues,
-          ids: [46233248, 46233249],
+          count: 4,
+          published: 1,
+          sort_new: "",
         },
       }),
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: "Vacancies" as const, id })),
-              { type: "Vacancies", id: "LIST" },
-            ]
-          : [{ type: "Vacancies", id: "LIST" }],
       transformResponse: (responce: VacancysServerResponce<IVacancy>) =>
         responce.objects,
     }),
@@ -55,39 +48,18 @@ export const vacanciesApi = createApi({
         url: `vacancies/${vacancyId}`,
       }),
     }),
-    getFavorites: build.query<IVacancy[], void>({
-      query: () => ({
-        url: `favorites`,
+    getFavorites: build.query<IVacancy[], number[]>({
+      query: (favoritesIds: number[]) => ({
+        url: `vacancies/?${favoritesIds
+          .map((item) => `ids[]=${item}&`)
+          .join("")}`,
+        params: {
+          count: 4,
+          published: 1,
+        },
       }),
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: "Vacancies" as const, id })),
-              { type: "Vacancies", id: "LIST" },
-            ]
-          : [{ type: "Vacancies", id: "LIST" }],
-      transformResponse: (responce: FavoritesServerResponce) =>
+      transformResponse: (responce: VacancysServerResponce<IVacancy>) =>
         responce.objects,
-    }),
-    AddFavorites: build.mutation<void, number>({
-      query: (id) => ({
-        url: `favorites/${id}`,
-        method: "post",
-      }),
-      invalidatesTags: [
-        { type: "Vacancies", id: "LIST" },
-        // { type: "Favorites", id: "LIST" },
-      ],
-    }),
-    RemoveFavorites: build.mutation<void, number>({
-      query: (id) => ({
-        url: `favorites/${id}`,
-        method: "delete",
-      }),
-      invalidatesTags: [
-        { type: "Vacancies", id: "LIST" },
-        // { type: "Favorites", id: "LIST" },
-      ],
     }),
   }),
 });
@@ -95,8 +67,8 @@ export const vacanciesApi = createApi({
 export const {
   useLazyGetVacanciesQuery,
   useGetVacanciesQuery,
-  useLazyGetVacancyQuery,
+
+  useGetVacancyQuery,
   useGetFavoritesQuery,
-  useAddFavoritesMutation,
-  useRemoveFavoritesMutation,
+  useLazyGetFavoritesQuery,
 } = vacanciesApi;
