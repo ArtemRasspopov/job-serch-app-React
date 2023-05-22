@@ -46,7 +46,6 @@ const SearchVacancyPage: React.FC = () => {
   };
 
   const changePageHandler = (selectedItem: { selected: number }) => {
-    console.log(selectedItem);
     dispatch(setPage(selectedItem.selected));
   };
 
@@ -70,7 +69,7 @@ const SearchVacancyPage: React.FC = () => {
                   .fill("")
                   .map(() => <VacancyCardSkeleton />)}
               {isSuccess &&
-                vacancysData.map((vacancy) => (
+                vacancysData.objects.map((vacancy) => (
                   <li className="vacancies__item" key={vacancy.id}>
                     <VacancyCard
                       vacancy={vacancy}
@@ -81,11 +80,13 @@ const SearchVacancyPage: React.FC = () => {
                 ))}
             </ul>
             <div className="pagination__wrapper">
-              <Pagination
-                pageCount={50}
-                activePage={page}
-                changePageHandler={changePageHandler}
-              />
+              {vacancysData && vacancysData.total > 4 && (
+                <Pagination
+                  pageCount={50}
+                  activePage={page}
+                  changePageHandler={changePageHandler}
+                />
+              )}
             </div>
           </div>
         </div>

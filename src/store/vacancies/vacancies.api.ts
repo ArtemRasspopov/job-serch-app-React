@@ -21,7 +21,7 @@ export const vacanciesApi = createApi({
   }),
   refetchOnFocus: true,
   endpoints: (build) => ({
-    getVacancies: build.query<IVacancy[], getVacanciesProps>({
+    getVacancies: build.query<VacancysServerResponce<IVacancy>, getVacanciesProps>({
       query: ({
         keyword,
         payment_from,
@@ -41,8 +41,8 @@ export const vacanciesApi = createApi({
           sort_new: "",
         },
       }),
-      transformResponse: (responce: VacancysServerResponce<IVacancy>) =>
-        responce.objects,
+      // transformResponse: (responce: VacancysServerResponce<IVacancy>) =>
+      //   responce.objects,
     }),
     getVacancy: build.query<IVacancy, number>({
       query: (vacancyId: number) => ({

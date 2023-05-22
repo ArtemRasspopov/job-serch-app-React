@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { setFavorite } from "../../store/favorites/favoritesSlice";
 import { Pagination } from "../../components/shared/Pagination/Pagination";
 import { setFavoritesPage } from "../../store/сatalogues/cataloguesFiltersSlice";
+import { VacancyCardSkeleton } from "../../components/VacancyCard/VacancyCardSkeleton/VacancyCardSkeleton";
 
 const FavoritesVacancyPage: React.FC = () => {
   const { favoritesData } = useAppSelector((state) => state.favoritesSlice);
@@ -24,10 +25,13 @@ const FavoritesVacancyPage: React.FC = () => {
   };
 
   useEffect(() => {
-    if (favoritesData) {
+    if (favoritesData.length) {
       getFavoritesHandler({ favoritesIds: favoritesData, page: favoritesPage });
     }
-  }, [favoritesData, getFavoritesHandler, favoritesPage]);
+    if (favoritesData.length < 5) {
+      dispatch(setFavoritesPage(0));
+    }
+  }, [favoritesData, getFavoritesHandler, favoritesPage, dispatch]);
 
   const changePageHandler = (selectedItem: { selected: number }) => {
     dispatch(setFavoritesPage(selectedItem.selected));
@@ -41,7 +45,7 @@ const FavoritesVacancyPage: React.FC = () => {
             {isLoading &&
               Array(4)
                 .fill("")
-                .map(() => <></>)}
+                .map(() => <VacancyCardSkeleton />)}
             {isSuccess &&
               fetchFavoritesData?.objects.map((vacancy) => (
                 <li className="vacancies__item" key={vacancy.id}>
@@ -54,10 +58,10 @@ const FavoritesVacancyPage: React.FC = () => {
                 </li>
               ))}
           </ul>
-          {fetchFavoritesData?.total && fetchFavoritesData?.total > 4 && (
+          {favoritesData.length > 4 && (
             <div className="pagination__wrapper">
               <Pagination
-                pageCount={fetchFavoritesData?.total / 4}
+                pageCount={Math.ceil(favoritesData.length / 4)}
                 activePage={favoritesPage}
                 changePageHandler={changePageHandler}
               />
