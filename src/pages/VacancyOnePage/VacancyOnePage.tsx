@@ -1,5 +1,5 @@
 import React from "react";
-import "./VacancyPage.scss";
+import "./VacancyOnePage.scss";
 import { VacancyCard } from "../../components/VacancyCard/VacancyCard";
 import { PageContainer } from "../../components/containers/PageContainer/PageContainer";
 import { VacancyDescription } from "../../components/VacancyDescription/VacancyDescription";
@@ -12,7 +12,7 @@ import { VacancyCardSkeleton } from "../../components/VacancyCard/VacancyCardSke
 import { VacancyDescriptionSkeleton } from "../../components/VacancyDescription/VacancyDescriptionSkeleton/VacancyDescriptionSkeleton";
 import { Container } from "../../components/containers/Container/Container";
 
-const VacancyPage: React.FC = () => {
+const VacancyOnePage: React.FC = () => {
   const location = useLocation();
   const { favoritesData } = useAppSelector((state) => state.favoritesSlice);
   const dispatch = useDispatch();
@@ -58,4 +58,4 @@ const VacancyPage: React.FC = () => {
   );
 };
 
-export default VacancyPage;
+export default VacancyOnePage;
