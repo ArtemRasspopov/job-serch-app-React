@@ -7,7 +7,7 @@ export const HeaderMenu: React.FC = () => {
     { title: "Поиск Вакансий", link: "/" },
     { title: "Избранное", link: "/favourites" },
   ];
-  
+
   const location = useLocation();
 
   return (
@@ -20,7 +20,7 @@ export const HeaderMenu: React.FC = () => {
                 location.pathname === item.link ? "--active" : ""
               }`}
               to={item.link}
-              key={index}
+              key={index + Math.floor(Date.now() / 1000)}
             >
               {item.title}
             </Link>

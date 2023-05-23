@@ -1,7 +1,11 @@
 .favoritesVacancyPage{
 
     &__inner{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
         max-width: 773px;
         margin: 0 auto;
+        height: 100%;
     }
 }

@@ -41,8 +41,6 @@ export const vacanciesApi = createApi({
           sort_new: "",
         },
       }),
-      // transformResponse: (responce: VacancysServerResponce<IVacancy>) =>
-      //   responce.objects,
     }),
     getVacancy: build.query<IVacancy, number>({
       query: (vacancyId: number) => ({
@@ -60,8 +58,6 @@ export const vacanciesApi = createApi({
           published: 1,
         },
       }),
-      // transformResponse: (responce: VacancysServerResponce<IVacancy>) =>
-      //   responce.objects,
     }),
   }),
 });

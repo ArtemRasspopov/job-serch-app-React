@@ -13,6 +13,7 @@ import {
 import { setFavorite } from "../../store/favorites/favoritesSlice";
 import { VacancyCardSkeleton } from "../../components/VacancyCard/VacancyCardSkeleton/VacancyCardSkeleton";
 import { Pagination } from "../../components/shared/Pagination/Pagination";
+import { Container } from "../../components/containers/Container/Container";
 
 const SearchVacancyPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -51,46 +52,49 @@ const SearchVacancyPage: React.FC = () => {
 
   return (
     <div className="searchVacancyPage page">
-      <PageContainer>
-        <div className="searchVacancyPage__inner">
-          <div className="searchVacancyPage__filters-wrapper">
-            <SearchFilters />
-          </div>
-          <div className="searchVacancyPage__content-wrapper">
-            <Search
-              searchHandler={searchHandler}
-              value={search}
-              button={true}
-              placeholder="Введите название вакансии"
-            />
-            <ul className="vacancies__list">
-              {isLoading &&
-                Array(4)
-                  .fill("")
-                  .map(() => <VacancyCardSkeleton />)}
-              {isSuccess &&
-                vacancysData.objects.map((vacancy) => (
-                  <li className="vacancies__item" key={vacancy.id}>
-                    <VacancyCard
-                      vacancy={vacancy}
-                      isFavorite={favoritesData.includes(vacancy.id)}
-                      changeFavoriteHandler={changeFavoriteHandler}
-                    />
-                  </li>
-                ))}
-            </ul>
-            <div className="pagination__wrapper">
-              {vacancysData && vacancysData.total > 4 && (
-                <Pagination
-                  pageCount={50}
-                  activePage={page}
-                  changePageHandler={changePageHandler}
-                />
-              )}
+      <Container>
+        <PageContainer>
+          <div className="searchVacancyPage__inner">
+            <div className="searchVacancyPage__filters-wrapper">
+              <SearchFilters />
+            </div>
+            <div className="searchVacancyPage__content-wrapper">
+              <Search
+                searchHandler={searchHandler}
+                value={search}
+                button={true}
+                placeholder="Введите название вакансии"
+              />
+              <ul className="vacancies__list">
+                {isLoading &&
+                  Array(4)
+                    .fill("")
+                    .map((_, id) => <VacancyCardSkeleton key={id + Math.floor(Date.now() / 1000)}/>)}
+                {isSuccess &&
+                  vacancysData.objects.map((vacancy) => (
+                    <li className="vacancies__item" key={vacancy.id + Math.floor(Date.now() / 1000)}>
+                      <VacancyCard
+                        vacancy={vacancy}
+                        isFavorite={favoritesData.includes(vacancy.id)}
+                        changeFavoriteHandler={changeFavoriteHandler}
+                      />
+                    </li>
+                  ))}
+              </ul>
+              <div className="pagination__wrapper">
+                {vacancysData?.total}
+                {vacancysData && vacancysData.total > 4 && (
+                  <Pagination
+                    pageCount={vacancysData.total}
+                    activePage={page}
+                    changePageHandler={changePageHandler}
+                  />
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      </PageContainer>
+        </PageContainer>
+      </Container>
     </div>
   );
 };

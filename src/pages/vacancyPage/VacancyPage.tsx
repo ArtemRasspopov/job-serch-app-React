@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { setFavorite } from "../../store/favorites/favoritesSlice";
 import { VacancyCardSkeleton } from "../../components/VacancyCard/VacancyCardSkeleton/VacancyCardSkeleton";
 import { VacancyDescriptionSkeleton } from "../../components/VacancyDescription/VacancyDescriptionSkeleton/VacancyDescriptionSkeleton";
+import { Container } from "../../components/containers/Container/Container";
 
 const VacancyPage: React.FC = () => {
   const location = useLocation();
@@ -30,27 +31,29 @@ const VacancyPage: React.FC = () => {
 
   return (
     <div className="vacancyPage page">
-      <PageContainer>
-        <div className="vacancyPage__inner">
-          {isLoading && (
-            <>
-              <VacancyCardSkeleton size="big" />
-              <VacancyDescriptionSkeleton />
-            </>
-          )}
-          {isSuccess && (
-            <>
-              <VacancyCard
-                size="big"
-                vacancy={vacancyData}
-                isFavorite={favoritesData.includes(vacancyId)}
-                changeFavoriteHandler={changeFavoriteHandler}
-              />
-              <VacancyDescription vacancy={vacancyData} />
-            </>
-          )}
-        </div>
-      </PageContainer>
+      <Container>
+        <PageContainer>
+          <div className="vacancyPage__inner">
+            {isLoading && (
+              <>
+                <VacancyCardSkeleton size="big" />
+                <VacancyDescriptionSkeleton />
+              </>
+            )}
+            {isSuccess && (
+              <>
+                <VacancyCard
+                  size="big"
+                  vacancy={vacancyData}
+                  isFavorite={favoritesData.includes(vacancyId)}
+                  changeFavoriteHandler={changeFavoriteHandler}
+                />
+                <VacancyDescription vacancy={vacancyData} />
+              </>
+            )}
+          </div>
+        </PageContainer>
+      </Container>
     </div>
   );
 };

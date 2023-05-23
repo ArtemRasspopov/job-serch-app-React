@@ -5,6 +5,7 @@ import "./VacancyCard.scss";
 import { StarIcon } from "../../assets/icons/StarIcon";
 import { IVacancy } from "../../models/models";
 import { Link } from "react-router-dom";
+import { json } from "stream/consumers";
 
 interface VacancyCardProps {
   size?: "small" | "big";
@@ -55,7 +56,16 @@ export const VacancyCard: React.FC<VacancyCardProps> = ({
 
               <ul className="vacancyCard__descr-list">
                 <li className="vacancyCard__descr-item">
-                  з/п от {vacancy.payment_from + " " + vacancy.currency}
+                  з/п{" "}
+                  {vacancy.agreement ? (
+                    "по договоренности"
+                  ) : vacancy.payment_from === 0 ? (
+                    "не указана"
+                  ) : (
+                    <>
+                      <>от {vacancy.payment_from + " " + vacancy.currency}</>
+                    </>
+                  )}
                 </li>
                 <li className="vacancyCard__descr-item">
                   {vacancy.type_of_work.title}

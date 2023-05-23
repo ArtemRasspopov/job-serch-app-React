@@ -8,6 +8,7 @@ import { setFavorite } from "../../store/favorites/favoritesSlice";
 import { Pagination } from "../../components/shared/Pagination/Pagination";
 import { setFavoritesPage } from "../../store/сatalogues/cataloguesFiltersSlice";
 import { VacancyCardSkeleton } from "../../components/VacancyCard/VacancyCardSkeleton/VacancyCardSkeleton";
+import { Container } from "../../components/containers/Container/Container";
 
 const FavoritesVacancyPage: React.FC = () => {
   const { favoritesData } = useAppSelector((state) => state.favoritesSlice);
@@ -39,36 +40,45 @@ const FavoritesVacancyPage: React.FC = () => {
 
   return (
     <div className="favoritesVacancyPage page">
-      <PageContainer>
-        <div className="favoritesVacancyPage__inner">
-          <ul className="vacancies__list">
-            {isLoading &&
-              Array(4)
-                .fill("")
-                .map(() => <VacancyCardSkeleton />)}
-            {isSuccess &&
-              fetchFavoritesData?.objects.map((vacancy) => (
-                <li className="vacancies__item" key={vacancy.id}>
-                  <VacancyCard
-                    vacancy={vacancy}
-                    isFavorite={favoritesData.includes(vacancy.id)}
-                    removable={true}
-                    changeFavoriteHandler={changeFavoriteHandler}
-                  />
-                </li>
-              ))}
-          </ul>
-          {favoritesData.length > 4 && (
-            <div className="pagination__wrapper">
-              <Pagination
-                pageCount={Math.ceil(favoritesData.length / 4)}
-                activePage={favoritesPage}
-                changePageHandler={changePageHandler}
-              />
-            </div>
-          )}
-        </div>
-      </PageContainer>
+      <Container>
+        <PageContainer>
+          <div className="favoritesVacancyPage__inner">
+            <ul className="vacancies__list">
+              {isLoading &&
+                Array(4)
+                  .fill("")
+                  .map((_, id) => (
+                    <VacancyCardSkeleton
+                      key={id + Math.floor(Date.now() / 1000)}
+                    />
+                  ))}
+              {isSuccess &&
+                fetchFavoritesData?.objects.map((vacancy) => (
+                  <li
+                    className="vacancies__item"
+                    key={vacancy.id + Math.floor(Date.now() / 1000)}
+                  >
+                    <VacancyCard
+                      vacancy={vacancy}
+                      isFavorite={favoritesData.includes(vacancy.id)}
+                      removable={true}
+                      changeFavoriteHandler={changeFavoriteHandler}
+                    />
+                  </li>
+                ))}
+            </ul>
+            {favoritesData.length > 4 && (
+              <div className="pagination__wrapper">
+                <Pagination
+                  pageCount={Math.ceil(favoritesData.length / 4)}
+                  activePage={favoritesPage}
+                  changePageHandler={changePageHandler}
+                />
+              </div>
+            )}
+          </div>
+        </PageContainer>
+      </Container>
     </div>
   );
 };
