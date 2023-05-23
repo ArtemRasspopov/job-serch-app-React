@@ -68,6 +68,7 @@
   &__star {
     display: flex;
     cursor: pointer;
+    margin-left: 20px;
   }
 }
 
@@ -102,12 +103,12 @@
 }
 
 @keyframes onHide {
-  50%{
+  50% {
     opacity: 0.5;
     margin-top: 0px;
     margin-bottom: 16px;
   }
-  100%{
+  100% {
     opacity: 0;
     margin-top: -135px;
     margin-bottom: 0;

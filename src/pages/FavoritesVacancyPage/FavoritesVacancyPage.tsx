@@ -71,7 +71,9 @@ const FavoritesVacancyPage: React.FC = () => {
                     ))}
                 </ul>
               </>
-            ) : <Navigate to={`/empty/favorites`}/>}
+            ) : (
+              <Navigate to={`/empty/favorites`} />
+            )}
 
             {favoritesData.length > 4 && (
               <div className="pagination__wrapper">

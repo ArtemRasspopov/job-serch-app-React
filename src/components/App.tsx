@@ -9,7 +9,7 @@ import VacancyOnePage from "../pages/VacancyOnePage/VacancyOnePage";
 function App() {
   return (
     <div className="app">
-      <BrowserRouter>
+      <BrowserRouter basename="site">
         <Header />
         <Routes>
           <Route path="/" element={<SearchVacancyPage />} />

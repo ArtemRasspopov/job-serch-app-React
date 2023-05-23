@@ -48,6 +48,7 @@ export const VacancyCard: React.FC<VacancyCardProps> = ({
 
   return (
     <div
+      data-elem={`vacancy-${vacancy?.id}`}
       className={`vacancyCard ${size === "big" && "--big"} ${
         isDisabled && "--disabled"
       }`}
@@ -65,7 +66,9 @@ export const VacancyCard: React.FC<VacancyCardProps> = ({
               )}
 
               <ul className="vacancyCard__descr-list">
-                <li className="vacancyCard__descr-item">з/п {determinePayment()}</li>
+                <li className="vacancyCard__descr-item">
+                  з/п {determinePayment()}
+                </li>
                 <li className="vacancyCard__descr-item">
                   {vacancy.type_of_work.title}
                 </li>
@@ -83,7 +86,10 @@ export const VacancyCard: React.FC<VacancyCardProps> = ({
               className="vacancyCard__star"
               onClick={() => starHandler(vacancy.id)}
             >
-              <StarIcon isActive={isFavorite} />
+              <StarIcon
+                isActive={isFavorite}
+                data-elem={`vacancy-${vacancy?.id}-shortlist-button`}
+              />
             </button>
           </div>
         </>

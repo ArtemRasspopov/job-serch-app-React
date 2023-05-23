@@ -3,10 +3,9 @@ import "./Search.scss";
 import { SearchIcon } from "../../assets/icons/SearchIcon";
 
 interface SearchProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  onButtonClick: (
-    value: string
-  ) => void;
-  value: string
+  onButtonClick: (value: string) => void;
+  value: string;
+  className?: string;
 }
 
 export const Search: React.FC<SearchProps> = ({
@@ -15,6 +14,7 @@ export const Search: React.FC<SearchProps> = ({
   placeholder,
   onChange,
   onButtonClick,
+  className,
 }) => {
   const buttonClickHandler = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -24,7 +24,7 @@ export const Search: React.FC<SearchProps> = ({
   };
 
   return (
-    <form className="search">
+    <form className={`search ${className}`}>
       <div className="search__iconWrapper">
         <SearchIcon />
       </div>
@@ -37,6 +37,7 @@ export const Search: React.FC<SearchProps> = ({
       />
 
       <button
+        data-elem="search-button"
         className="search__submitButton button"
         type="submit"
         onClick={buttonClickHandler}

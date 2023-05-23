@@ -69,17 +69,21 @@ const SearchVacancyPage: React.FC = () => {
       <Container>
         <PageContainer>
           <div className="searchVacancyPage__inner">
-            <div className="searchVacancyPage__filters-wrapper">
+            <div className={`searchVacancyPage__filters-wrapper `}>
               <SearchFilters onReset={SearchFiltersResetHandler} />
             </div>
             <div className="searchVacancyPage__content-wrapper">
-              <Search
-                value={searchValue}
-                placeholder="Введите название вакансии"
-                type="text"
-                onChange={(event) => searchHandler(event.target.value)}
-                onButtonClick={searchButtonClickHandler}
-              />
+              <div className="searchVacancyPage__search-wrapper">
+                <Search
+                  data-elem="search-input"
+                  className={"searchVacancyPage__search"}
+                  value={searchValue}
+                  placeholder="Введите название вакансии"
+                  type="text"
+                  onChange={(event) => searchHandler(event.target.value)}
+                  onButtonClick={searchButtonClickHandler}
+                />
+              </div>
               <ul className="vacancies__list">
                 {(isFetching || isLoading) &&
                   Array(4)

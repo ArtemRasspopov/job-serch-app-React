@@ -33,20 +33,22 @@ export const DropdownInput: React.FC<DropdownInputProps> = ({
   };
 
   return (
-    <div className="dropdownInput">
+    <div className="dropdownInput" >
       <div
-        className={`dropdownInput__button ${dropdownIsActive && "--active"} ${activeItem && "--selecting"}`}
+        className={`dropdownInput__button ${dropdownIsActive && "--active"} ${
+          activeItem && "--selecting"
+        }`}
       >
         <button onClick={() => dropdownOpenHandler()}>
           <p>{activeItem ? data[activeItem - 1] : "Выберете отрасль"}</p>
+          <div
+            className={`dropdownInput__button-arrow ${
+              dropdownIsActive ? "--active" : ""
+            }`}
+          >
+            <ArrowIcon color={dropdownIsActive ? "active" : "default"} />
+          </div>
         </button>
-        <div
-          className={`dropdownInput__button-arrow ${
-            dropdownIsActive ? "--active" : ""
-          }`}
-        >
-          <ArrowIcon color={dropdownIsActive ? "active" : "default"} />
-        </div>
       </div>
       <ul className={`dropdownInput__list ${dropdownIsActive && "--active"}`}>
         {data.map((item, index) => (

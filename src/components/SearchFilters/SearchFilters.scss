@@ -18,6 +18,10 @@
 
   &__resetButton {
     color: #acadb9;
+
+    &:hover{
+      color: #92C1FF;
+    }
   }
 
   &__list {

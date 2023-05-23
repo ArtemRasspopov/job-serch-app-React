@@ -61,6 +61,7 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({ onReset }) => {
         <li className="searchFilters__item">
           <h4 className="searchFilters__item-title">Отрасль</h4>
           <DropdownInput
+            data-elem="industry-select"
             data={cataloguesData?.map((item) => item.title)}
             activeItem={activeCatalogues}
             onChange={changeCataloguesHandler}
@@ -70,6 +71,7 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({ onReset }) => {
           <h4 className="searchFilters__item-title">Оклад</h4>
           <div className="searchFilters__inputs-wrapper">
             <NumberInput
+              data-elem="salary-from-input"
               placeholder="От"
               step={1000}
               min={0}
@@ -77,6 +79,7 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({ onReset }) => {
               onChange={setPaymentFromValue}
             />
             <NumberInput
+              data-elem="salary-to-input"
               placeholder="До"
               step={1000}
               min={paymentFromValue + 1000}
@@ -88,6 +91,7 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({ onReset }) => {
         </li>
       </ul>
       <button
+        data-elem="search-button"
         type="submit"
         className="searchFilters__submitButton button"
         onClick={() => formSubmitHandler()}
