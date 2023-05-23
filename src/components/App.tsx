@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import VacancyPage from "../pages/VacancyPage/VacancyPage";
 import SearchVacancyPage from "../pages/SearchVacancyPage/SearchVacancyPage";
 import FavoriteVacancyPage from "../pages/FavoritesVacancyPage/FavoritesVacancyPage";
-import VacancyPageСopy from "../pages/VacancyPageСopy/VacancyPageСopy";
+import VacancyPage from "../pages/VacancyPage/VacancyPage";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<SearchVacancyPage />} />
           {/* <Route path="/vacancy/:id" element={<VacancyPage />} /> */}
-          <Route path="/vacancy/:id" element={<VacancyPageСopy />} />
+          <Route path="/vacancy/:id" element={<VacancyPage />} />
           <Route path="/favourites" element={<FavoriteVacancyPage/>}/>
           <Route path={'empty' && '*'} element={<EmptyPage />} />
         </Routes>
