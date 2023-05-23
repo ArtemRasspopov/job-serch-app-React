@@ -5,13 +5,17 @@ import { NumberInput } from "../shared/NumberInput/NumberInput";
 import { useGetCataloguesQuery } from "../../store/сatalogues/catalogues.api";
 import { useAppDispatch } from "../../hooks/redux";
 import {
+  resetFilters,
   setCatalogues,
-  setPage,
   setPaymentFrom,
   setPaymentTo,
 } from "../../store/сatalogues/cataloguesFiltersSlice";
 
-export const SearchFilters: React.FC = () => {
+interface SearchFiltersProps {
+  onReset?: () => void;
+}
+
+export const SearchFilters: React.FC<SearchFiltersProps> = ({ onReset }) => {
   const { data: cataloguesData } = useGetCataloguesQuery({});
   const [activeCatalogues, setActiveCatalogues] = useState<number>(0);
   const [paymentFromValue, setPaymentFromValue] = useState<number>(0);
@@ -26,17 +30,16 @@ export const SearchFilters: React.FC = () => {
     }
     dispatch(setPaymentFrom(paymentFromValue));
     dispatch(setPaymentTo(paymentToValue));
-    dispatch(setPage(0));
   };
 
   const resetHandler = () => {
     setActiveCatalogues((prev) => (prev = 0));
     setPaymentFromValue((prev) => (prev = 0));
     setPaymentToValue((prev) => (prev = 0));
-    dispatch(setCatalogues(0));
-    dispatch(setPaymentFrom(0));
-    dispatch(setPaymentTo(0));
-    dispatch(setPage(0));
+    dispatch(resetFilters());
+    if (onReset) {
+      onReset();
+    }
   };
 
   const changeCataloguesHandler = (index: number) => {

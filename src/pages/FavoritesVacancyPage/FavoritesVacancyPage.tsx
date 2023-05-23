@@ -43,30 +43,35 @@ const FavoritesVacancyPage: React.FC = () => {
       <Container>
         <PageContainer>
           <div className="favoritesVacancyPage__inner">
-            <ul className="vacancies__list">
-              {isLoading &&
-                Array(4)
-                  .fill("")
-                  .map((_, id) => (
-                    <VacancyCardSkeleton
-                      key={id + Math.floor(Date.now() / 1000)}
-                    />
-                  ))}
-              {isSuccess &&
-                fetchFavoritesData?.objects.map((vacancy) => (
-                  <li
-                    className="vacancies__item"
-                    key={vacancy.id + Math.floor(Date.now() / 1000)}
-                  >
-                    <VacancyCard
-                      vacancy={vacancy}
-                      isFavorite={favoritesData.includes(vacancy.id)}
-                      removable={true}
-                      changeFavoriteHandler={changeFavoriteHandler}
-                    />
-                  </li>
-                ))}
-            </ul>
+            {favoritesData.length && (
+              <>
+                <ul className="vacancies__list">
+                  {isLoading &&
+                    Array(4)
+                      .fill("")
+                      .map((_, id) => (
+                        <VacancyCardSkeleton
+                          key={id + Math.floor(Date.now() / 1000)}
+                        />
+                      ))}
+                  {isSuccess &&
+                    fetchFavoritesData?.objects.map((vacancy) => (
+                      <li
+                        className="vacancies__item"
+                        key={vacancy.id + Math.floor(Date.now() / 1000)}
+                      >
+                        <VacancyCard
+                          vacancy={vacancy}
+                          isFavorite={favoritesData.includes(vacancy.id)}
+                          removable={true}
+                          changeFavoriteHandler={changeFavoriteHandler}
+                        />
+                      </li>
+                    ))}
+                </ul>
+              </>
+            )}
+
             {favoritesData.length > 4 && (
               <div className="pagination__wrapper">
                 <Pagination

@@ -1,38 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./Search.scss";
 import { SearchIcon } from "../../assets/icons/SearchIcon";
-import { useDebonce } from "../../hooks/debonce";
 
-interface SearchProps {
-  searchHandler: (string: string) => void;
-  value: string;
-  button?: boolean;
-  placeholder?: string
+interface SearchProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  onButtonClick: (
+    value: string
+  ) => void;
+  value: string
 }
 
 export const Search: React.FC<SearchProps> = ({
-  searchHandler,
   value,
-  button = false,
-  placeholder
+  type,
+  placeholder,
+  onChange,
+  onButtonClick,
 }) => {
-  const [serchValue, setSerchValue] = useState(value);
-
-  const debounced = useDebonce(serchValue);
-
-  useEffect(() => {
-    if (!debounced) {
-      searchHandler("");
-    } else if (!button) {
-      searchHandler(debounced);
-    }
-  }, [debounced, searchHandler, button]);
-
   const buttonClickHandler = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
-    searchHandler(debounced);
+    onButtonClick(value);
   };
 
   return (
@@ -42,20 +30,19 @@ export const Search: React.FC<SearchProps> = ({
       </div>
       <input
         className="search__input"
-        type="text"
+        type={type}
         placeholder={placeholder}
-        value={serchValue}
-        onChange={(event) => setSerchValue(event.target.value)}
+        value={value}
+        onChange={onChange}
       />
-      {button && (
-        <button
-          className="search__submitButton button"
-          type="submit"
-          onClick={(event) => buttonClickHandler(event)}
-        >
-          Поиск
-        </button>
-      )}
+
+      <button
+        className="search__submitButton button"
+        type="submit"
+        onClick={buttonClickHandler}
+      >
+        Поиск
+      </button>
     </form>
   );
 };

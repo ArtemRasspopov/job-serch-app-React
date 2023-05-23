@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { PageContainer } from "../../components/containers/PageContainer/PageContainer";
 import { VacancyCard } from "../../components/VacancyCard/VacancyCard";
 import { SearchFilters } from "../../components/SearchFilters/SearchFilters";
@@ -18,6 +18,7 @@ import { Container } from "../../components/containers/Container/Container";
 const SearchVacancyPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { favoritesData } = useAppSelector((state) => state.favoritesSlice);
+  const [searchValue, setSearchValue] = useState("");
   const { catalogues, search, payment_from, payment_to, page } = useAppSelector(
     (state) => state.cataloguesFiltersSlice
   );
@@ -25,6 +26,7 @@ const SearchVacancyPage: React.FC = () => {
     data: vacancysData,
     isLoading,
     isSuccess,
+    isFetching,
   } = useGetVacanciesQuery(
     {
       keyword: search.split(" "),
@@ -39,8 +41,15 @@ const SearchVacancyPage: React.FC = () => {
   );
 
   const searchHandler = (value: string) => {
+    setSearchValue((prev) => (prev = value));
+    if (value.length < 1) {
+      dispatch(setSearch(""));
+    }
+  };
+
+  const searchButtonClickHandler = (value: string) => {
+    console.log(value);
     dispatch(setSearch(value));
-    dispatch(setPage(0))
   };
 
   const changeFavoriteHandler = (vacancyId: number) => {
@@ -51,29 +60,42 @@ const SearchVacancyPage: React.FC = () => {
     dispatch(setPage(selectedItem.selected));
   };
 
+  const SearchFiltersResetHandler = () => {
+    setSearchValue("");
+  };
+
   return (
     <div className="searchVacancyPage page">
       <Container>
         <PageContainer>
           <div className="searchVacancyPage__inner">
             <div className="searchVacancyPage__filters-wrapper">
-              <SearchFilters />
+              <SearchFilters onReset={SearchFiltersResetHandler} />
             </div>
             <div className="searchVacancyPage__content-wrapper">
               <Search
-                searchHandler={searchHandler}
-                value={search}
-                button={true}
+                value={searchValue}
                 placeholder="Введите название вакансии"
+                type="text"
+                onChange={(event) => searchHandler(event.target.value)}
+                onButtonClick={searchButtonClickHandler}
               />
               <ul className="vacancies__list">
-                {isLoading &&
+                {(isFetching || isLoading) &&
                   Array(4)
                     .fill("")
-                    .map((_, id) => <VacancyCardSkeleton key={id + Math.floor(Date.now() / 1000)}/>)}
+                    .map((_, id) => (
+                      <VacancyCardSkeleton
+                        key={id + Math.floor(Date.now() / 1000)}
+                      />
+                    ))}
                 {isSuccess &&
+                  !isFetching &&
                   vacancysData.objects.map((vacancy) => (
-                    <li className="vacancies__item" key={vacancy.id + Math.floor(Date.now() / 1000)}>
+                    <li
+                      className="vacancies__item"
+                      key={vacancy.id + Math.floor(Date.now() / 1000)}
+                    >
                       <VacancyCard
                         vacancy={vacancy}
                         isFavorite={favoritesData.includes(vacancy.id)}
@@ -85,7 +107,7 @@ const SearchVacancyPage: React.FC = () => {
               <div className="pagination__wrapper">
                 {vacancysData && vacancysData.total > 4 && (
                   <Pagination
-                    pageCount={(Math.ceil(vacancysData?.total / 4)) - 1}
+                    pageCount={Math.ceil(vacancysData?.total / 4) - 1}
                     activePage={page}
                     changePageHandler={changePageHandler}
                   />

@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { LocationIcon } from "../../assets/icons/LocationIcon";
 import "./VacancyCard.scss";
-
 import { StarIcon } from "../../assets/icons/StarIcon";
 import { IVacancy } from "../../models/models";
 import { Link } from "react-router-dom";
-import { json } from "stream/consumers";
 
 interface VacancyCardProps {
   size?: "small" | "big";
@@ -28,11 +26,23 @@ export const VacancyCard: React.FC<VacancyCardProps> = ({
   const starHandler = (vacancyId: number) => {
     if (removable) {
       setIsDisabled(true);
-      setTimeout(() => {
-        changeFavoriteHandler(vacancyId);
-      }, 1000);
+      changeFavoriteHandler(vacancyId);
     } else {
       changeFavoriteHandler(vacancyId);
+    }
+  };
+
+  const determinePayment = () => {
+    if (vacancy?.agreement) {
+      return "по договоренности";
+    } else if (vacancy?.payment_to && vacancy.payment_from) {
+      return `от ${vacancy?.payment_from} до ${vacancy?.payment_to}`;
+    } else if (vacancy?.payment_from) {
+      return `от ${vacancy?.payment_from}`;
+    } else if (vacancy?.payment_to) {
+      return `до ${vacancy?.payment_to}`;
+    } else {
+      return `не указана`;
     }
   };
 
@@ -55,18 +65,7 @@ export const VacancyCard: React.FC<VacancyCardProps> = ({
               )}
 
               <ul className="vacancyCard__descr-list">
-                <li className="vacancyCard__descr-item">
-                  з/п{" "}
-                  {vacancy.agreement ? (
-                    "по договоренности"
-                  ) : vacancy.payment_from === 0 ? (
-                    "не указана"
-                  ) : (
-                    <>
-                      <>от {vacancy.payment_from + " " + vacancy.currency}</>
-                    </>
-                  )}
-                </li>
+                <li className="vacancyCard__descr-item">з/п {determinePayment()}</li>
                 <li className="vacancyCard__descr-item">
                   {vacancy.type_of_work.title}
                 </li>
