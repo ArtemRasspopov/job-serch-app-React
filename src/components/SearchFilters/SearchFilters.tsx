@@ -20,6 +20,8 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({ onReset }) => {
   const [activeCatalogues, setActiveCatalogues] = useState<number>(0);
   const [paymentFromValue, setPaymentFromValue] = useState<number>(0);
   const [paymentToValue, setPaymentToValue] = useState<number>(0);
+
+
   const dispatch = useAppDispatch();
 
   const formSubmitHandler = () => {

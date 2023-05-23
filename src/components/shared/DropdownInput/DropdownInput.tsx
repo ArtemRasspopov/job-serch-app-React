@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./DropdownInput.scss";
 import { ArrowIcon } from "../../../assets/icons/ArrowIcon";
 
@@ -14,12 +14,31 @@ export const DropdownInput: React.FC<DropdownInputProps> = ({
   onChange,
 }) => {
   const [dropdownIsActive, setDropdownIsActive] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!activeItem) {
       setDropdownIsActive(false);
     }
   }, [activeItem]);
+
+  const clickOutsideHandler = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
+      setDropdownIsActive(false);
+    }
+  };
+
+  useEffect(() => {
+    if (dropdownIsActive) {
+      document.addEventListener("click", clickOutsideHandler);
+    }
+    return () => {
+      document.removeEventListener("click", clickOutsideHandler);
+    };
+  }, [dropdownIsActive]);
 
   const dropdownOpenHandler = () => {
     setDropdownIsActive((prev) => (prev = !prev));
@@ -33,7 +52,7 @@ export const DropdownInput: React.FC<DropdownInputProps> = ({
   };
 
   return (
-    <div className="dropdownInput" >
+    <div className="dropdownInput" ref={dropdownRef}>
       <div
         className={`dropdownInput__button ${dropdownIsActive && "--active"} ${
           activeItem && "--selecting"
