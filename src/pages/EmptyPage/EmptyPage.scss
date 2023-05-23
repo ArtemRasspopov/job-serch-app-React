@@ -6,6 +6,11 @@
   height: calc(100vh - 88px);
   gap: 32px;
 
+  &__image-wrapper{
+    width: 241px;
+    height: 231px;
+  }
+
   &__title {
     font-weight: 700;
     font-size: 24px;

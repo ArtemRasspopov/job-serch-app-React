@@ -9,6 +9,7 @@ import { Pagination } from "../../components/shared/Pagination/Pagination";
 import { setFavoritesPage } from "../../store/сatalogues/cataloguesFiltersSlice";
 import { VacancyCardSkeleton } from "../../components/VacancyCard/VacancyCardSkeleton/VacancyCardSkeleton";
 import { Container } from "../../components/containers/Container/Container";
+import { Navigate } from "react-router-dom";
 
 const FavoritesVacancyPage: React.FC = () => {
   const { favoritesData } = useAppSelector((state) => state.favoritesSlice);
@@ -43,7 +44,7 @@ const FavoritesVacancyPage: React.FC = () => {
       <Container>
         <PageContainer>
           <div className="favoritesVacancyPage__inner">
-            {favoritesData.length && (
+            {favoritesData.length ? (
               <>
                 <ul className="vacancies__list">
                   {isLoading &&
@@ -70,7 +71,7 @@ const FavoritesVacancyPage: React.FC = () => {
                     ))}
                 </ul>
               </>
-            )}
+            ) : <Navigate to={`/empty/favorites`}/>}
 
             {favoritesData.length > 4 && (
               <div className="pagination__wrapper">

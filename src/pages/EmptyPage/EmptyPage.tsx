@@ -1,6 +1,7 @@
 import React from "react";
 import emptyPageIcon from "../../assets/images/emptyPageIcon.png";
 import "./EmptyPage.scss";
+import { Link } from "react-router-dom";
 
 const EmptyPage: React.FC = () => {
   return (
@@ -13,7 +14,7 @@ const EmptyPage: React.FC = () => {
         />
       </div>
       <h2 className="emptyPage__title">Упс, здесь еще ничего нет!</h2>
-      <button className="emptyPage__button button">Поиск Вакансий</button>
+      <Link to={"/"} className="emptyPage__button button">Поиск Вакансий</Link>
     </div>
   );
 };
