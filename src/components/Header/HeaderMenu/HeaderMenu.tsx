@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./HeaderMenu.scss";
 import { Link, useLocation } from "react-router-dom";
 
@@ -8,9 +8,6 @@ export const HeaderMenu: React.FC = () => {
     { title: "Избранное", link: "/favourites" },
   ];
   const location = useLocation();
-  // const [activeMenu, setActiveMenu] = useState(0);
-
-
 
   return (
     <div className="headerMenu">
@@ -18,13 +15,11 @@ export const HeaderMenu: React.FC = () => {
         <li className="headerMenu__item">
           {menuItems.map((item, index) => (
             <Link
-
               className={`headerMenu__link ${
                 item.link === location.pathname ? "--active" : ""
               }`}
               to={item.link}
               key={index + Math.floor(Date.now() / 1000)}
-              // onClick={() => console.log(setActiveMenu(index))}
             >
               {item.title}
             </Link>
