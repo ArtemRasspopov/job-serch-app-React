@@ -6,6 +6,7 @@ import { useGetCataloguesQuery } from "../../store/сatalogues/catalogues.api";
 import { useAppDispatch } from "../../hooks/redux";
 import {
   setCatalogues,
+  setPage,
   setPaymentFrom,
   setPaymentTo,
 } from "../../store/сatalogues/cataloguesFiltersSlice";
@@ -23,8 +24,9 @@ export const SearchFilters: React.FC = () => {
         dispatch(setCatalogues(cataloguesData[activeCatalogues - 1].key));
       }
     }
-    dispatch(setPaymentFrom(paymentFromValue))
-    dispatch(setPaymentTo(paymentToValue))
+    dispatch(setPaymentFrom(paymentFromValue));
+    dispatch(setPaymentTo(paymentToValue));
+    dispatch(setPage(0));
   };
 
   const resetHandler = () => {
@@ -32,8 +34,9 @@ export const SearchFilters: React.FC = () => {
     setPaymentFromValue((prev) => (prev = 0));
     setPaymentToValue((prev) => (prev = 0));
     dispatch(setCatalogues(0));
-    dispatch(setPaymentFrom(0))
-    dispatch(setPaymentTo(0))
+    dispatch(setPaymentFrom(0));
+    dispatch(setPaymentTo(0));
+    dispatch(setPage(0));
   };
 
   const changeCataloguesHandler = (index: number) => {

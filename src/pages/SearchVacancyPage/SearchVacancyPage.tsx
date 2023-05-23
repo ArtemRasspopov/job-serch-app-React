@@ -40,6 +40,7 @@ const SearchVacancyPage: React.FC = () => {
 
   const searchHandler = (value: string) => {
     dispatch(setSearch(value));
+    dispatch(setPage(0))
   };
 
   const changeFavoriteHandler = (vacancyId: number) => {
@@ -82,10 +83,9 @@ const SearchVacancyPage: React.FC = () => {
                   ))}
               </ul>
               <div className="pagination__wrapper">
-                {vacancysData?.total}
                 {vacancysData && vacancysData.total > 4 && (
                   <Pagination
-                    pageCount={vacancysData.total}
+                    pageCount={(Math.ceil(vacancysData?.total / 4)) - 1}
                     activePage={page}
                     changePageHandler={changePageHandler}
                   />
