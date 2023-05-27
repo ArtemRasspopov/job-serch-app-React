@@ -16,7 +16,7 @@ export const vacanciesApi = createApi({
       "x-Api-App-Id":
         "v3.r.137440105.ffdbab114f92b821eac4e21f485343924a773131.06c3bdbb8446aeb91c35b80c42ff69eb9c457948",
       Authorization:
-        "Bearer v3.r.137539487.07026ed24c017e28c9eb286b79f7d50fcb71a6b2.95817820a8b87b681017db06b1334f5c2d401ac3",
+        "Bearer v3.r.137539487.e6ae644d285ce630dfc237be32706c8621110528.61c894ece9f0e03d23e632265df380baabfde164",
     },
   }),
   refetchOnFocus: true,
