@@ -4,7 +4,7 @@ job-serch-app-React is a web application for job search
 
 ## Demo
 
-You can open a demo of the project by following the link: https://job-serch-app-react.onrender.com
+You can open a demo of the project by following the link: https://gleaming-licorice-669b82.netlify.app/
 
 ## What can you do?
 
